@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bishnu Prasad Pokharel | Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #1a1a24;
+    --accent: #00d4ff;
+    --accent2: #7c3aed;
+    --accent3: #10b981;
+    --text: #e8e8f0;
+    --text2: #8888aa;
+    --border: rgba(255,255,255,0.08);
+    --card: rgba(255,255,255,0.03);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    width: 40px; height: 40px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transition: all 0.15s ease;
+    opacity: 0.5;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Nav */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10,10,15,0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 1rem;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text2);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-content { max-width: 900px; }
+
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--accent);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero-name {
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 800;
+    line-height: 0.95;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+
+  .hero-name span {
+    display: block;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-desc {
+    font-size: 1.1rem;
+    color: var(--text2);
+    max-width: 600px;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .btn-primary {
+    padding: 0.9rem 2.5rem;
+    background: var(--accent);
+    color: #000;
+    border: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: none;
+    text-decoration: none;
+    transition: all 0.3s;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  }
+
+  .btn-primary:hover {
+    background: #fff;
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    padding: 0.9rem 2.5rem;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: none;
+    text-decoration: none;
+    transition: all 0.3s;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.2s forwards;
+  }
+
+  .hero-scroll span {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text2);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    animation: scrollPulse 2s infinite;
+  }
+
+  /* Sections */
+  section {
+    padding: 6rem 4rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 800;
+    margin-bottom: 3rem;
+    line-height: 1.1;
+  }
+
+  /* About */
+  .about { background: var(--bg2); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    color: var(--text2);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+  }
+
+  .about-text p strong { color: var(--accent); }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--accent);
+  }
+
+  .stat-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--accent);
+    font-family: 'Space Mono', monospace;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--text2);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* Skills */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skill-category {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skill-category::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,212,255,0.03), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .skill-category:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+  }
+
+  .skill-category:hover::after { opacity: 1; }
+
+  .skill-cat-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .skill-tag {
+    padding: 0.3rem 0.8rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    font-size: 0.75rem;
+    color: var(--text2);
+    font-family: 'Space Mono', monospace;
+    transition: all 0.2s;
+  }
+
+  .skill-tag:hover {
+    background: rgba(0,212,255,0.1);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* Experience */
+  .experience { background: var(--bg2); }
+
+  .exp-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .exp-item:last-child { border-bottom: none; }
+
+  .exp-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text2);
+    padding-top: 0.3rem;
+    letter-spacing: 0.05em;
+  }
+
+  .exp-company {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+
+  .exp-role {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .exp-desc {
+    color: var(--text2);
+    line-height: 1.7;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+
+  .exp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .exp-tag {
+    padding: 0.2rem 0.7rem;
+    background: rgba(124,58,237,0.15);
+    border: 1px solid rgba(124,58,237,0.3);
+    font-size: 0.7rem;
+    color: #a78bfa;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* Projects */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 2rem;
+  }
+
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: all 0.3s;
+    position: relative;
+  }
+
+  .project-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(0,212,255,0.1);
+  }
+
+  .project-header {
+    padding: 2rem 2rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+
+  .project-icon {
+    width: 48px; height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    background: rgba(0,212,255,0.1);
+    border: 1px solid rgba(0,212,255,0.2);
+  }
+
+  .project-type {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent3);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border: 1px solid rgba(16,185,129,0.3);
+    padding: 0.2rem 0.6rem;
+  }
+
+  .project-body { padding: 0 2rem 2rem; }
+
+  .project-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .project-desc {
+    color: var(--text2);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .stack-tag {
+    padding: 0.2rem 0.6rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    font-size: 0.65rem;
+    color: var(--text2);
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* Contact */
+  .contact { background: var(--bg2); text-align: center; }
+
+  .contact-inner { max-width: 600px; margin: 0 auto; }
+
+  .contact-title {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 800;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+  }
+
+  .contact-title span {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .contact-desc {
+    color: var(--text2);
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text2);
+    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    transition: color 0.3s;
+    letter-spacing: 0.05em;
+  }
+
+  .contact-link:hover { color: var(--accent); }
+
+  /* Footer */
+  footer {
+    padding: 2rem 4rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  footer span {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text2);
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 1; transform: scaleY(1); }
+    50% { opacity: 0.3; transform: scaleY(0.5); }
+  }
+
+  /* Glow orbs */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.15;
+  }
+
+  .orb-1 {
+    width: 600px; height: 600px;
+    background: var(--accent2);
+    top: -200px; right: -200px;
+  }
+
+  .orb-2 {
+    width: 400px; height: 400px;
+    background: var(--accent);
+    bottom: 20%; left: -100px;
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 6rem 1.5rem 4rem; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<nav>
+  <a href="#" class="nav-logo">BPP</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">// Available for full-time roles</div>
+    <h1 class="hero-name">
+      Bishnu Prasad
+      <span>Pokharel</span>
+    </h1>
+    <p class="hero-desc">
+      Automation & Controls Engineer meets Software Developer. I build systems that bridge industrial hardware with intelligent software — from PLC-controlled production lines to AI-powered applications.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">View My Work</a>
+      <a href="#contact" class="btn-secondary">Get In Touch</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-label">// 01. About</div>
+  <h2 class="section-title">Who I Am</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm a <strong>Computer Science & Engineering graduate</strong> from the University of Toledo (GPA 3.9, Magna Cum Laude) with hands-on experience building automation systems from concept to production floor.</p>
+      <p>At <strong>Tenneco Inc.</strong>, I served as the primary electrical design engineer — self-teaching AutoCAD Electrical, programming PLCs, building HMI systems, and commissioning custom automated machinery from scratch in a cross-disciplinary team.</p>
+      <p>On the software side, I build <strong>AI-powered applications</strong> using OpenAI API, full-stack web apps, and IoT systems. I thrive at the intersection of hardware precision and software intelligence.</p>
+      <p>Currently relocating to <strong>New Jersey</strong> and actively seeking full-time engineering opportunities.</p>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">3.9</div>
+        <div class="stat-label">GPA — Magna Cum Laude</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">20mo</div>
+        <div class="stat-label">Engineering Co-op</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">30+</div>
+        <div class="stat-label">Machines Designed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">$1M+</div>
+        <div class="stat-label">Project Value</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">// 02. Skills</div>
+  <h2 class="section-title">What I Know</h2>
+  <div class="skills-grid">
+    <div class="skill-category">
+      <div class="skill-cat-title">⚡ Automation & Controls</div>
+      <div class="skill-tags">
+        <span class="skill-tag">PLC Programming</span>
+        <span class="skill-tag">Structured Text</span>
+        <span class="skill-tag">Ladder Logic</span>
+        <span class="skill-tag">MotionWorks IEC</span>
+        <span class="skill-tag">Servo Motors</span>
+        <span class="skill-tag">VFDs</span>
+        <span class="skill-tag">Ethernet/IP</span>
+        <span class="skill-tag">Level I/II Systems</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-title">🖥️ HMI & SCADA</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Movicon HMI</span>
+        <span class="skill-tag">Real-time Dashboards</span>
+        <span class="skill-tag">SCADA Systems</span>
+        <span class="skill-tag">Cognex Vision</span>
+        <span class="skill-tag">Keyence Sensors</span>
+        <span class="skill-tag">Banner Safety</span>
+        <span class="skill-tag">Epson Robots</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-title">📐 Design & Electrical</div>
+      <div class="skill-tags">
+        <span class="skill-tag">AutoCAD Electrical</span>
+        <span class="skill-tag">SolidWorks</span>
+        <span class="skill-tag">Creo</span>
+        <span class="skill-tag">Panel Design</span>
+        <span class="skill-tag">3D Printing</span>
+        <span class="skill-tag">FMEA</span>
+        <span class="skill-tag">Root Cause Analysis</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-title">💻 Software & AI</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">Java</span>
+        <span class="skill-tag">C/C++</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">Node.js</span>
+        <span class="skill-tag">React Native</span>
+        <span class="skill-tag">OpenAI API</span>
+        <span class="skill-tag">MQTT</span>
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag">MongoDB</span>
+        <span class="skill-tag">Linux</span>
+        <span class="skill-tag">Git</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience" id="experience">
+  <div class="section-label">// 03. Experience</div>
+  <h2 class="section-title">Where I've Worked</h2>
+
+  <div class="exp-item">
+    <div class="exp-date">Jan 2023 — Aug 2024</div>
+    <div>
+      <div class="exp-company">Tenneco Inc.</div>
+      <div class="exp-role">Engineering Co-op · Burlington, Iowa</div>
+      <p class="exp-desc">
+        Served as primary electrical design engineer in a cross-disciplinary team, building custom automated manufacturing systems from concept through production deployment. Self-taught AutoCAD Electrical and produced the most complex schematics in the plant. Programmed PLC control logic, developed HMI/SCADA systems, integrated Cognex vision systems, and commissioned production equipment including full I/O verification and safety integration.
+      </p>
+      <div class="exp-tags">
+        <span class="exp-tag">AutoCAD Electrical</span>
+        <span class="exp-tag">MotionWorks IEC</span>
+        <span class="exp-tag">Movicon HMI</span>
+        <span class="exp-tag">Cognex Vision</span>
+        <span class="exp-tag">Ethernet/IP</span>
+        <span class="exp-tag">Servo Systems</span>
+        <span class="exp-tag">$1M+ Project</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="exp-item">
+    <div class="exp-date">May 2026 — Aug 2026</div>
+    <div>
+      <div class="exp-company">University of Toledo</div>
+      <div class="exp-role">Summer Camp Instructor Assistant · Toledo, Ohio</div>
+      <p class="exp-desc">
+        Preparing educational materials on cybersecurity, machine learning, and artificial intelligence for high school summer camps. Assisting in delivering technical curriculum and writing instructional reports within the Electrical Engineering and Computer Science department.
+      </p>
+      <div class="exp-tags">
+        <span class="exp-tag">Machine Learning</span>
+        <span class="exp-tag">Cybersecurity</span>
+        <span class="exp-tag">AI Education</span>
+        <span class="exp-tag">Curriculum Design</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">// 04. Projects</div>
+  <h2 class="section-title">What I've Built</h2>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-icon">🔔</div>
+        <div class="project-type">IoT · Hardware</div>
+      </div>
+      <div class="project-body">
+        <div class="project-title">SilentBell</div>
+        <p class="project-desc">
+          End-to-end IoT smart doorbell for hearing-impaired users. Designed electrical schematics in AutoCAD Electrical, completed all wiring and hardware assembly, modeled enclosure in SolidWorks with 3D printed fabrication. Architected real-time MQTT pub/sub system with sub-second latency and &gt;99% reliability.
+        </p>
+        <div class="project-stack">
+          <span class="stack-tag">MQTT</span>
+          <span class="stack-tag">AutoCAD Electrical</span>
+          <span class="stack-tag">SolidWorks</span>
+          <span class="stack-tag">Node.js</span>
+          <span class="stack-tag">React</span>
+          <span class="stack-tag">MongoDB</span>
+          <span class="stack-tag">3D Printing</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-icon">🤖</div>
+        <div class="project-type">AI · Full-Stack</div>
+      </div>
+      <div class="project-body">
+        <div class="project-title">MoneyMate</div>
+        <p class="project-desc">
+          AI-powered receipt scanning application integrating OpenAI API and OCR to automate data extraction with 95% accuracy, reducing manual entry by 80%. Built complete full-stack pipeline with Node.js, Express, MongoDB backend and React Native mobile frontend.
+        </p>
+        <div class="project-stack">
+          <span class="stack-tag">OpenAI API</span>
+          <span class="stack-tag">OCR</span>
+          <span class="stack-tag">React Native</span>
+          <span class="stack-tag">Node.js</span>
+          <span class="stack-tag">MongoDB</span>
+          <span class="stack-tag">Express</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="section-label" style="display:inline-block">// 05. Contact</div>
+    <h2 class="contact-title">Let's <span>Work Together</span></h2>
+    <p class="contact-desc">
+      I am actively seeking full-time engineering opportunities. Whether you need an automation engineer, controls developer, or software engineer — let's talk.
+    </p>
+    <a href="mailto:writetobishnup@gmail.com" class="btn-primary">writetobishnup@gmail.com</a>
+    <div class="contact-links">
+      <a href="tel:5673290596" class="contact-link">📞 (567) 329-0596</a>
+      <a href="https://www.linkedin.com/in/bishnu-prasad-pokharel-2450b9236" target="_blank" class="contact-link">💼 LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Bishnu Prasad Pokharel</span>
+  <span>CS & Engineering Graduate · University of Toledo</span>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0;
+  let ringX = 0, ringY = 0;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursor.style.left = mouseX - 6 + 'px';
+    cursor.style.top = mouseY - 6 + 'px';
+  });
+
+  function animateRing() {
+    ringX += (mouseX - ringX - 20) * 0.12;
+    ringY += (mouseY - ringY - 20) * 0.12;
+    ring.style.left = ringX + 'px';
+    ring.style.top = ringY + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  // Hover effect on interactive elements
+  document.querySelectorAll('a, button, .skill-category, .project-card, .stat-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'scale(2)';
+      ring.style.transform = 'scale(1.5)';
+      ring.style.borderColor = 'var(--accent)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'scale(1)';
+      ring.style.transform = 'scale(1)';
+      ring.style.borderColor = 'var(--accent)';
+    });
+  });
+
+  // Scroll animations
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.skill-category, .project-card, .exp-item, .stat-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(30px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
