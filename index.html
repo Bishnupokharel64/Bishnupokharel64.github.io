@@ -3,698 +3,615 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bishnu Prasad Pokharel | Engineer</title>
+<title>Bishnu Prasad Pokharel</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0a0a0f;
-    --bg2: #111118;
-    --bg3: #1a1a24;
-    --accent: #00d4ff;
-    --accent2: #7c3aed;
-    --accent3: #10b981;
-    --text: #e8e8f0;
-    --text2: #8888aa;
-    --border: rgba(255,255,255,0.08);
-    --card: rgba(255,255,255,0.03);
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Syne', sans-serif;
-    overflow-x: hidden;
-    cursor: none;
-  }
-
-  /* Custom cursor */
-  .cursor {
-    width: 12px; height: 12px;
-    background: var(--accent);
-    border-radius: 50%;
-    position: fixed;
-    top: 0; left: 0;
-    pointer-events: none;
-    z-index: 9999;
-    transition: transform 0.1s;
-    mix-blend-mode: difference;
-  }
-  .cursor-ring {
-    width: 40px; height: 40px;
-    border: 1px solid var(--accent);
-    border-radius: 50%;
-    position: fixed;
-    top: 0; left: 0;
-    pointer-events: none;
-    z-index: 9998;
-    transition: all 0.15s ease;
-    opacity: 0.5;
-  }
-
-  /* Grid background */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* Nav */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 1.5rem 4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(10,10,15,0.8);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .nav-logo {
-    font-family: 'Space Mono', monospace;
-    font-size: 1rem;
-    color: var(--accent);
-    text-decoration: none;
-    letter-spacing: 0.1em;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 2.5rem;
-    list-style: none;
-  }
-
-  .nav-links a {
-    color: var(--text2);
-    text-decoration: none;
-    font-size: 0.85rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    transition: color 0.3s;
-    font-family: 'Space Mono', monospace;
-  }
-
-  .nav-links a:hover { color: var(--accent); }
-
-  /* Hero */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    padding: 8rem 4rem 4rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  .hero-content { max-width: 900px; }
-
-  .hero-tag {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.8rem;
-    color: var(--accent);
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.2s forwards;
-  }
-
-  .hero-name {
-    font-size: clamp(3rem, 8vw, 7rem);
-    font-weight: 800;
-    line-height: 0.95;
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.4s forwards;
-  }
-
-  .hero-name span {
-    display: block;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .hero-desc {
-    font-size: 1.1rem;
-    color: var(--text2);
-    max-width: 600px;
-    line-height: 1.7;
-    margin-bottom: 3rem;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.6s forwards;
-  }
-
-  .hero-cta {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.8s forwards;
-  }
-
-  .btn-primary {
-    padding: 0.9rem 2.5rem;
-    background: var(--accent);
-    color: #000;
-    border: none;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.8rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    cursor: none;
-    text-decoration: none;
-    transition: all 0.3s;
-    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-  }
-
-  .btn-primary:hover {
-    background: #fff;
-    transform: translateY(-2px);
-  }
-
-  .btn-secondary {
-    padding: 0.9rem 2.5rem;
-    background: transparent;
-    color: var(--text);
-    border: 1px solid var(--border);
-    font-family: 'Space Mono', monospace;
-    font-size: 0.8rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    cursor: none;
-    text-decoration: none;
-    transition: all 0.3s;
-    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-  }
-
-  .btn-secondary:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    transform: translateY(-2px);
-  }
-
-  .hero-scroll {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    opacity: 0;
-    animation: fadeUp 0.8s 1.2s forwards;
-  }
-
-  .hero-scroll span {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--text2);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-  }
-
-  .scroll-line {
-    width: 1px;
-    height: 40px;
-    background: linear-gradient(to bottom, var(--accent), transparent);
-    animation: scrollPulse 2s infinite;
-  }
-
-  /* Sections */
-  section {
-    padding: 6rem 4rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  .section-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--accent);
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-  }
-
-  .section-title {
-    font-size: clamp(2rem, 4vw, 3.5rem);
-    font-weight: 800;
-    margin-bottom: 3rem;
-    line-height: 1.1;
-  }
-
-  /* About */
-  .about { background: var(--bg2); }
-
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: start;
-  }
-
-  .about-text p {
-    color: var(--text2);
-    line-height: 1.8;
-    margin-bottom: 1.5rem;
-    font-size: 1rem;
-  }
-
-  .about-text p strong { color: var(--accent); }
-
-  .stats-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-  }
-
-  .stat-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    padding: 1.5rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .stat-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 3px;
-    height: 100%;
-    background: var(--accent);
-  }
-
-  .stat-number {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: var(--accent);
-    font-family: 'Space Mono', monospace;
-    line-height: 1;
-    margin-bottom: 0.5rem;
-  }
-
-  .stat-label {
-    font-size: 0.8rem;
-    color: var(--text2);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  /* Skills */
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .skill-category {
-    background: var(--card);
-    border: 1px solid var(--border);
-    padding: 2rem;
-    transition: border-color 0.3s, transform 0.3s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .skill-category::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(0,212,255,0.03), transparent);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .skill-category:hover {
-    border-color: var(--accent);
-    transform: translateY(-4px);
-  }
-
-  .skill-category:hover::after { opacity: 1; }
-
-  .skill-cat-title {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--accent);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .skill-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .skill-tag {
-    padding: 0.3rem 0.8rem;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid var(--border);
-    font-size: 0.75rem;
-    color: var(--text2);
-    font-family: 'Space Mono', monospace;
-    transition: all 0.2s;
-  }
-
-  .skill-tag:hover {
-    background: rgba(0,212,255,0.1);
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-
-  /* Experience */
-  .experience { background: var(--bg2); }
-
-  .exp-item {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 3rem;
-    margin-bottom: 3rem;
-    padding-bottom: 3rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .exp-item:last-child { border-bottom: none; }
-
-  .exp-date {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.8rem;
-    color: var(--text2);
-    padding-top: 0.3rem;
-    letter-spacing: 0.05em;
-  }
-
-  .exp-company {
-    font-size: 1.3rem;
-    font-weight: 700;
-    margin-bottom: 0.3rem;
-  }
-
-  .exp-role {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.8rem;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-    margin-bottom: 1rem;
-  }
-
-  .exp-desc {
-    color: var(--text2);
-    line-height: 1.7;
-    font-size: 0.95rem;
-    margin-bottom: 1rem;
-  }
-
-  .exp-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .exp-tag {
-    padding: 0.2rem 0.7rem;
-    background: rgba(124,58,237,0.15);
-    border: 1px solid rgba(124,58,237,0.3);
-    font-size: 0.7rem;
-    color: #a78bfa;
-    font-family: 'Space Mono', monospace;
-  }
-
-  /* Projects */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: 2rem;
-  }
-
-  .project-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    overflow: hidden;
-    transition: all 0.3s;
-    position: relative;
-  }
-
-  .project-card:hover {
-    border-color: var(--accent);
-    transform: translateY(-6px);
-    box-shadow: 0 20px 60px rgba(0,212,255,0.1);
-  }
-
-  .project-header {
-    padding: 2rem 2rem 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 1rem;
-  }
-
-  .project-icon {
-    width: 48px; height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    background: rgba(0,212,255,0.1);
-    border: 1px solid rgba(0,212,255,0.2);
-  }
-
-  .project-type {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--accent3);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    border: 1px solid rgba(16,185,129,0.3);
-    padding: 0.2rem 0.6rem;
-  }
-
-  .project-body { padding: 0 2rem 2rem; }
-
-  .project-title {
-    font-size: 1.3rem;
-    font-weight: 700;
-    margin-bottom: 0.75rem;
-  }
-
-  .project-desc {
-    color: var(--text2);
-    font-size: 0.9rem;
-    line-height: 1.7;
-    margin-bottom: 1.5rem;
-  }
-
-  .project-stack {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .stack-tag {
-    padding: 0.2rem 0.6rem;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid var(--border);
-    font-size: 0.65rem;
-    color: var(--text2);
-    font-family: 'Space Mono', monospace;
-  }
-
-  /* Contact */
-  .contact { background: var(--bg2); text-align: center; }
-
-  .contact-inner { max-width: 600px; margin: 0 auto; }
-
-  .contact-title {
-    font-size: clamp(2rem, 5vw, 4rem);
-    font-weight: 800;
-    margin-bottom: 1rem;
-    line-height: 1.1;
-  }
-
-  .contact-title span {
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .contact-desc {
-    color: var(--text2);
-    margin-bottom: 2.5rem;
-    line-height: 1.7;
-  }
-
-  .contact-links {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    margin-top: 2rem;
-  }
-
-  .contact-link {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--text2);
-    text-decoration: none;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.8rem;
-    transition: color 0.3s;
-    letter-spacing: 0.05em;
-  }
-
-  .contact-link:hover { color: var(--accent); }
-
-  /* Footer */
-  footer {
-    padding: 2rem 4rem;
-    border-top: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-  }
-
-  footer span {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--text2);
-  }
-
-  /* Animations */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes scrollPulse {
-    0%, 100% { opacity: 1; transform: scaleY(1); }
-    50% { opacity: 0.3; transform: scaleY(0.5); }
-  }
-
-  /* Glow orbs */
-  .orb {
-    position: fixed;
-    border-radius: 50%;
-    filter: blur(100px);
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.15;
-  }
-
-  .orb-1 {
-    width: 600px; height: 600px;
-    background: var(--accent2);
-    top: -200px; right: -200px;
-  }
-
-  .orb-2 {
-    width: 400px; height: 400px;
-    background: var(--accent);
-    bottom: 20%; left: -100px;
-  }
-
-  @media (max-width: 768px) {
-    nav { padding: 1rem 1.5rem; }
-    .nav-links { display: none; }
-    .hero { padding: 6rem 1.5rem 4rem; }
-    section { padding: 4rem 1.5rem; }
-    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
-    footer { flex-direction: column; gap: 1rem; text-align: center; padding: 1.5rem; }
-  }
+:root{--bg:#050508;--s1:#0d0d14;--s2:#13131e;--a1:#6ee7f7;--a2:#a78bfa;--a3:#34d399;--a4:#fbbf24;--tx:#f0f0f8;--tx2:#7878a0;--bd:rgba(255,255,255,0.06)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:'Syne',sans-serif;overflow-x:hidden;cursor:none}
+
+/* LOADER */
+#loader{position:fixed;inset:0;background:#000;z-index:10000;display:flex;align-items:center;justify-content:center;overflow:hidden}
+#lcanvas{position:absolute;inset:0;width:100%;height:100%}
+.ltext{position:relative;z-index:2;text-align:center;opacity:0;transition:opacity 0.8s}
+.ltext h1{font-family:'Syne',sans-serif;font-size:clamp(1.5rem,4vw,3rem);font-weight:800;color:#fff;letter-spacing:0.05em}
+.ltext p{font-family:'Space Mono',monospace;font-size:0.75rem;color:rgba(255,255,255,0.5);letter-spacing:0.3em;text-transform:uppercase;margin-top:0.5rem}
+
+/* CURSOR */
+#cur{position:fixed;width:8px;height:8px;background:var(--a1);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:transform 0.1s}
+#cur2{position:fixed;width:36px;height:36px;border:1px solid rgba(110,231,247,0.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left 0.15s,top 0.15s}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:1.2rem 5%;display:flex;justify-content:space-between;align-items:center;background:rgba(5,5,8,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--bd)}
+.nlogo{font-family:'Space Mono',monospace;font-size:0.85rem;color:var(--a1);text-decoration:none;letter-spacing:0.15em}
+.nlinks{display:flex;gap:1.8rem;list-style:none}
+.nlinks a{color:var(--tx2);text-decoration:none;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;transition:color 0.3s;font-family:'Space Mono',monospace}
+.nlinks a:hover{color:var(--a1)}
+.ncv{padding:0.5rem 1.2rem;border:1px solid var(--a1);color:var(--a1);text-decoration:none;font-family:'Space Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.3s;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px))}
+.ncv:hover{background:var(--a1);color:#000}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:8rem 5% 4rem;gap:4rem;position:relative;z-index:2}
+.hbadge{display:inline-flex;align-items:center;gap:0.5rem;padding:0.4rem 1rem;border:1px solid rgba(110,231,247,0.3);background:rgba(110,231,247,0.05);font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--a1);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1.8rem;opacity:0;animation:up 0.8s 0.2s forwards}
+.hbadge::before{content:'';width:6px;height:6px;background:var(--a3);border-radius:50%;animation:pulse 2s infinite}
+.hname{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,7vw,6.5rem);font-weight:800;line-height:0.95;margin-bottom:0.8rem;opacity:0;animation:up 0.8s 0.4s forwards}
+.hname .n1{display:block;color:var(--tx)}
+.hname .n2{display:block;-webkit-text-stroke:1.5px var(--a1);-webkit-text-fill-color:transparent}
+.htitle{font-family:'Space Mono',monospace;font-size:0.85rem;color:var(--a2);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:1.5rem;opacity:0;animation:up 0.8s 0.6s forwards}
+.hdesc{color:var(--tx2);font-size:0.95rem;line-height:1.8;max-width:480px;margin-bottom:2.5rem;opacity:0;animation:up 0.8s 0.8s forwards}
+.hdesc strong{color:var(--a1);font-weight:700}
+.hbtns{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:up 0.8s 1s forwards}
+.bg{padding:0.85rem 2rem;background:var(--a1);color:#000;text-decoration:none;font-family:'Space Mono',monospace;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.3s;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));box-shadow:0 0 30px rgba(110,231,247,0.25);font-weight:700}
+.bg:hover{transform:translateY(-3px);box-shadow:0 0 50px rgba(110,231,247,0.4)}
+.bo{padding:0.85rem 2rem;background:transparent;color:var(--tx);border:1px solid var(--bd);text-decoration:none;font-family:'Space Mono',monospace;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.3s;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px))}
+.bo:hover{border-color:var(--a1);color:var(--a1);transform:translateY(-3px)}
+
+/* PHOTO */
+.hright{display:flex;justify-content:center;align-items:center;opacity:0;animation:up 0.8s 0.5s forwards}
+.pcon{position:relative;width:230px;height:310px;display:none}
+.pborder{position:absolute;inset:-4px;clip-path:polygon(0 0,calc(100% - 34px) 0,100% 34px,100% 100%,34px 100%,0 calc(100% - 34px));background:linear-gradient(135deg,var(--a1),var(--a2),var(--a3));z-index:0;animation:glw 3s ease-in-out infinite alternate}
+@keyframes glw{from{opacity:0.5}to{opacity:1}}
+.pframe{width:100%;height:100%;position:relative;z-index:1;overflow:hidden;clip-path:polygon(0 0,calc(100% - 30px) 0,100% 30px,100% 100%,30px 100%,0 calc(100% - 30px))}
+.pframe img{width:100%;height:100%;object-fit:cover;object-position:center top;filter:brightness(1.15) contrast(1.05);transition:transform 0.9s cubic-bezier(0.34,1.56,0.64,1);display:block}
+.pframe:hover img{transform:rotateY(360deg)}
+.ptag1{position:absolute;bottom:-1rem;right:-1rem;background:var(--s2);border:1px solid var(--bd);padding:0.7rem 1rem;font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--a3);letter-spacing:0.08em;z-index:2}
+.ptag2{position:absolute;top:-1rem;left:-1rem;background:var(--s2);border:1px solid var(--bd);padding:0.7rem 1rem;font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--a2);letter-spacing:0.08em;z-index:2}
+.float{animation:flt 4s ease-in-out infinite}
+@keyframes flt{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+/* CHARACTER */
+.char-wrap{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center}
+
+.char-glow{position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);width:140px;height:16px;background:radial-gradient(ellipse,rgba(110,231,247,0.35) 0%,transparent 70%);border-radius:50%;animation:glowPulse 3s ease-in-out infinite}
+@keyframes charFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes glowPulse{0%,100%{opacity:0.5;transform:translateX(-50%) scaleX(1)}50%{opacity:1;transform:translateX(-50%) scaleX(1.2)}}
+
+/* SECTIONS */
+section{padding:6rem 5%;position:relative;z-index:2}
+.se{font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--a1);letter-spacing:0.3em;text-transform:uppercase;margin-bottom:0.7rem}
+.st{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,4vw,3.5rem);font-weight:800;line-height:1.1;margin-bottom:3rem}
+.surface{background:var(--s1)}
+
+/* ABOUT - Kritan style */
+.about-wrap{max-width:900px}
+.about-intro{font-size:1.15rem;line-height:1.9;color:var(--tx2);margin-bottom:1.5rem}
+.about-intro strong{color:var(--tx);font-weight:700}
+.about-intro a{color:var(--a1);text-decoration:none}
+.about-meta{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:3rem}
+.am-section h4{font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--a1);letter-spacing:0.25em;text-transform:uppercase;margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--bd)}
+.am-item{display:flex;flex-direction:column;margin-bottom:0.8rem}
+.am-label{font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--tx2);letter-spacing:0.1em;text-transform:uppercase}
+.am-val{font-size:0.9rem;color:var(--tx);font-weight:600;margin-top:0.1rem}
+.am-tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.5rem}
+.am-tag{padding:0.25rem 0.7rem;font-family:'Space Mono',monospace;font-size:0.65rem;border:1px solid var(--bd);color:var(--tx2)}
+
+/* SKILLS */
+.skgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem}
+.skcard{background:var(--s1);border:1px solid var(--bd);padding:1.8rem;transition:all 0.3s;position:relative;overflow:hidden}
+.skcard:hover{border-color:rgba(110,231,247,0.2);transform:translateY(-4px)}
+.ski{font-size:1.8rem;margin-bottom:1rem}
+.skc{font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--a1);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1rem;padding-bottom:0.8rem;border-bottom:1px solid var(--bd)}
+.skl{display:flex;flex-wrap:wrap;gap:0.4rem}
+.skp{padding:0.25rem 0.65rem;background:rgba(255,255,255,0.04);border:1px solid var(--bd);font-size:0.67rem;color:var(--tx2);font-family:'Space Mono',monospace;transition:all 0.2s}
+.skp:hover{background:rgba(110,231,247,0.08);border-color:rgba(110,231,247,0.3);color:var(--a1)}
+
+/* EXPERIENCE */
+.tl{position:relative;padding-left:2rem}
+.tl::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--a1),var(--a2),transparent)}
+.tli{position:relative;padding-left:2.5rem;margin-bottom:3.5rem}
+.tli::before{content:'';position:absolute;left:-2rem;top:0.4rem;width:10px;height:10px;background:var(--a1);border-radius:50%;box-shadow:0 0 15px var(--a1);transform:translateX(-4px)}
+.eh{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.4rem;flex-wrap:wrap;gap:0.8rem}
+.ec{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700}
+.ep{font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--a1);border:1px solid rgba(110,231,247,0.3);padding:0.3rem 0.7rem}
+.er{font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--a2);letter-spacing:0.08em;margin-bottom:1rem}
+.ed{color:var(--tx2);line-height:1.8;font-size:0.9rem;margin-bottom:1rem}
+.echips{display:flex;flex-wrap:wrap;gap:0.4rem}
+.ech{padding:0.2rem 0.65rem;background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.2);font-size:0.62rem;color:#a78bfa;font-family:'Space Mono',monospace}
+
+/* PROJECTS */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
+.pc{background:var(--s1);border:1px solid var(--bd);overflow:hidden;transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);position:relative}
+.pc:hover{transform:translateY(-8px) scale(1.01);border-color:rgba(110,231,247,0.3);box-shadow:0 30px 80px rgba(0,0,0,0.5),0 0 40px rgba(110,231,247,0.05)}
+.pt{padding:1.8rem 1.8rem 0;display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem}
+.pem{font-size:2rem}
+.pbdg{font-family:'Space Mono',monospace;font-size:0.58rem;color:var(--a3);border:1px solid rgba(52,211,153,0.3);padding:0.2rem 0.6rem;text-transform:uppercase;letter-spacing:0.1em}
+.pb{padding:0 1.8rem 1.8rem}
+.pn{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;margin-bottom:0.6rem}
+.pd{color:var(--tx2);font-size:0.85rem;line-height:1.7;margin-bottom:1rem}
+.pm{display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap}
+.pmet{font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--a1)}
+.pmet::before{content:'▲ '}
+.pst{display:flex;flex-wrap:wrap;gap:0.3rem}
+.psi{padding:0.2rem 0.5rem;background:rgba(255,255,255,0.04);font-size:0.6rem;color:var(--tx2);font-family:'Space Mono',monospace;border:1px solid var(--bd)}
+
+/* ACHIEVEMENTS */
+.achgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem}
+.achc{background:var(--s2);border:1px solid var(--bd);padding:1.8rem;transition:all 0.3s;position:relative;overflow:hidden}
+.achc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--a1),var(--a2));transform:scaleX(0);transition:transform 0.3s}
+.achc:hover{transform:translateY(-4px);border-color:rgba(110,231,247,0.2)}
+.achc:hover::before{transform:scaleX(1)}
+.aico{font-size:2.2rem;margin-bottom:0.8rem}
+.atit{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:0.2rem}
+.aorg{font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--a1);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.7rem}
+.adsc{color:var(--tx2);font-size:0.82rem;line-height:1.6}
+.abdg{display:inline-block;margin-top:0.8rem;padding:0.2rem 0.7rem;font-family:'Space Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em}
+.gold{background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.3);color:var(--a4)}
+.green{background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.3);color:var(--a3)}
+.blue{background:rgba(110,231,247,0.1);border:1px solid rgba(110,231,247,0.3);color:var(--a1)}
+.purple{background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.3);color:var(--a2)}
+
+/* FUN FACTS */
+.ffgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1rem}
+.ffc{background:var(--s1);border:1px solid var(--bd);padding:1.8rem;text-align:center;transition:all 0.3s}
+.ffc:hover{transform:translateY(-4px) rotate(1deg);border-color:rgba(110,231,247,0.3)}
+.ffem{font-size:2.5rem;margin-bottom:0.8rem;display:block}
+.fftx{font-size:0.85rem;color:var(--tx2);line-height:1.5}
+.fftx strong{color:var(--tx);display:block;font-size:0.95rem;margin-bottom:0.3rem;font-family:'Syne',sans-serif;font-weight:700}
+
+/* CONTACT */
+.contact{padding:8rem 5%;background:var(--s1);text-align:center;position:relative;z-index:2;overflow:hidden}
+.contact::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(110,231,247,0.04) 0%,transparent 70%);pointer-events:none}
+.ctit{font-family:'Syne',sans-serif;font-size:clamp(2.5rem,6vw,5rem);font-weight:800;margin-bottom:1rem;line-height:1}
+.ctit span{-webkit-text-stroke:1.5px var(--a1);-webkit-text-fill-color:transparent}
+.csub{color:var(--tx2);max-width:480px;margin:0 auto 3rem;line-height:1.7;font-size:0.95rem}
+.ccards{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-top:2rem}
+.ccard{display:flex;align-items:center;gap:0.8rem;padding:1rem 1.5rem;background:var(--s2);border:1px solid var(--bd);text-decoration:none;color:var(--tx);transition:all 0.3s;font-family:'Space Mono',monospace;font-size:0.72rem}
+.ccard:hover{border-color:var(--a1);color:var(--a1);transform:translateY(-3px)}
+
+/* FOOTER */
+footer{padding:2rem 5%;border-top:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2;flex-wrap:wrap;gap:1rem}
+footer span{font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--tx2)}
+
+/* ANIMATIONS */
+@keyframes up{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.8)}}
+@keyframes flt{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.rev{opacity:0;transform:translateY(40px);transition:opacity 0.7s ease,transform 0.7s ease}
+.rev.vis{opacity:1;transform:translateY(0)}
+
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;text-align:center;padding:7rem 5% 4rem}
+  .hright{order:-1}
+  .pcon{width:240px;height:320px}
+  .hdesc{margin:0 auto 2rem}
+  .hbtns{justify-content:center}
+  .about-meta{grid-template-columns:1fr}
+  .nlinks{display:none}
+  footer{flex-direction:column;text-align:center}
+}
+
+/* WHAT I DO SECTION */
+.whatido{padding:6rem 5%;background:var(--bg);position:relative;z-index:2}
+.wid-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+.wid-char{display:flex;justify-content:center;align-items:center}
+.robo-wrap{position:relative;display:flex;flex-direction:column;align-items:center}
+#robo-svg{width:320px;height:400px;filter:drop-shadow(0 20px 60px rgba(110,231,247,0.25));animation:charFloat 3s ease-in-out infinite;overflow:visible}
+.robo-glow{position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:180px;height:20px;background:radial-gradient(ellipse,rgba(110,231,247,0.3) 0%,transparent 70%);border-radius:50%;animation:glowPulse 3s ease-in-out infinite}
+@keyframes scanLine{0%{transform:translateY(-14px);opacity:0.3}100%{transform:translateY(14px);opacity:0.3}}
+#scan-line{animation:scanLine 2s ease-in-out infinite alternate}
+@keyframes antennaPulse{0%,100%{opacity:0.6}50%{opacity:1;filter:drop-shadow(0 0 8px #6ee7f7)}}
+#antenna-glow{animation:antennaPulse 1.5s ease-in-out infinite}
+@keyframes roboCursor{0%,49%{opacity:1}50%,100%{opacity:0}}
+#robo-cursor{animation:roboCursor 1s infinite}
+.wid-items{display:flex;flex-direction:column;gap:1.5rem}
+.wid-item{padding:1.5rem;background:var(--s1);border:1px solid var(--bd);transition:all 0.3s;position:relative;overflow:hidden}
+.wid-item::before{content:'';position:absolute;top:0;left:0;width:0;height:100%;background:rgba(110,231,247,0.03);transition:width 0.4s}
+.wid-item:hover{border-color:rgba(110,231,247,0.3);transform:translateX(8px)}
+.wid-item:hover::before{width:100%}
+.wid-corner{position:absolute;top:0;right:0;width:20px;height:20px;border-top:1px solid var(--a1);border-right:1px solid var(--a1)}
+.wid-corner2{position:absolute;bottom:0;left:0;width:20px;height:20px;border-bottom:1px solid var(--a1);border-left:1px solid var(--a1)}
+.wid-num{font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--a1);letter-spacing:0.2em;margin-bottom:0.4rem}
+.wid-title{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:0.4rem}
+.wid-desc{color:var(--tx2);font-size:0.82rem;line-height:1.6;margin-bottom:0.7rem}
+.wid-tags{display:flex;flex-wrap:wrap;gap:0.3rem}
+.wid-tag{padding:0.2rem 0.6rem;font-family:'Space Mono',monospace;font-size:0.58rem;border:1px solid var(--bd);color:var(--tx2)}
+/* PHYSICS SKILLS SECTION */
+.physics-skills{padding:4rem 5% 3rem;background:var(--s1);position:relative;z-index:2}
+.arena-wrap{position:relative;width:100%;border:1px solid var(--bd);overflow:hidden;margin-top:1.5rem;background:radial-gradient(ellipse at 20% 50%,rgba(110,231,247,0.04) 0%,transparent 60%)}
+#physics-canvas{display:block;width:100%;height:520px;cursor:grab}
+#physics-canvas:active{cursor:grabbing}
+/* BRAIN positioned LEFT side overlaying canvas */
+.brain-overlay{position:absolute;left:0;top:0;bottom:0;width:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem 0.5rem;background:linear-gradient(90deg,rgba(5,5,15,0.95) 0%,rgba(5,5,15,0.85) 80%,transparent 100%);pointer-events:none;z-index:10;gap:0.3rem}
+#brain-svg{width:200px;height:260px;pointer-events:all;cursor:default;filter:drop-shadow(0 8px 25px rgba(110,231,247,0.3));transition:filter 0.3s}
+#brain-svg.hungry{filter:drop-shadow(0 8px 40px rgba(110,231,247,0.7)) drop-shadow(0 0 20px rgba(251,191,36,0.5))}
+.brain-info{text-align:center;pointer-events:none}
+.brain-count{font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--a3);letter-spacing:0.08em;margin-bottom:0.2rem}
+.brain-msg{font-family:'Space Mono',monospace;font-size:0.55rem;color:var(--tx2);letter-spacing:0.05em;animation:pulse 2s infinite;line-height:1.4;max-width:160px;text-align:center}
+.physics-hint{text-align:center;margin-top:0.8rem;font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--tx2);letter-spacing:0.05em}
+/* HUNGRY BRAIN MONSTER */
+/* HUNGRY BRAIN MONSTER */
+.brain-section{position:relative;overflow:hidden}
+@media(max-width:700px){
+  .skills-arena{grid-template-columns:1fr;height:auto}
+  .brain-side{border-right:none;border-bottom:1px solid var(--bd);padding:1.2rem}
+  #brain-svg{width:130px;height:160px}
+  #physics-canvas{height:300px !important}
+  .wid-grid{grid-template-columns:1fr}
+  #robo-svg{width:260px;height:320px}
+}
+/* MONITOR BLINK */
+@keyframes monBlink{0%,45%,55%,100%{opacity:0.9}48%,52%{opacity:0}}
+@keyframes monBlink2{0%,45%,55%,100%{opacity:0}48%,52%{opacity:0.9}}
+@keyframes cursorBlink{0%,49%{opacity:1}50%,100%{opacity:0}}
+@keyframes monGlowPulse{0%,100%{filter:drop-shadow(0 0 8px rgba(110,231,247,0.4))}50%{filter:drop-shadow(0 0 20px rgba(110,231,247,0.8))}}
+#screen-a{animation:monBlink 4s infinite}
+#screen-b{animation:monBlink2 4s infinite}
+#cursor-blink{animation:cursorBlink 1s infinite}
+#char-desk{animation:charFloat 3s ease-in-out infinite,monGlowPulse 4s infinite}
+
+/* HUNGRY BRAIN MONSTER */
+.brain-section{position:relative;overflow:hidden}
+#brain-wrap{display:flex;flex-direction:column;align-items:center;margin-top:2rem;position:relative}
+#brain-svg{width:200px;height:200px;margin:0 auto;display:block;cursor:pointer;transition:transform 0.3s;filter:drop-shadow(0 10px 30px rgba(110,231,247,0.3))}
+#brain-svg:hover{transform:scale(1.05)}
+.brain-hint{font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--a1);text-align:center;margin-top:0.5rem;letter-spacing:0.1em;animation:pulse 2s infinite}
+.brain-nom{position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);font-size:2rem;opacity:0;pointer-events:none;transition:all 0.5s}
+
+/* ABOUT GRID with character */
+.about-grid-new{display:grid;grid-template-columns:300px 1fr;gap:4rem;align-items:start}
+.about-char{display:flex;justify-content:center;align-items:flex-start;padding-top:2rem}
+@keyframes float2{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-8px) rotate(3deg)}}
+@keyframes float3{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-6px) rotate(-4deg)}}
+@media(max-width:900px){
+  .about-grid-new{grid-template-columns:1fr}
+  .about-char{order:-1;padding-top:0}
+  #astro-svg{width:220px !important;height:275px !important}
+}
 </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
+<!-- LOADER with comet -->
+<div id="loader">
+  <canvas id="lcanvas"></canvas>
+  <div class="ltext" id="ltext">
+    <h1>Bishnu Prasad Pokharel</h1>
+    <p>Multidisciplinary Engineer</p>
+  </div>
+</div>
 
-<div class="orb orb-1"></div>
-<div class="orb orb-2"></div>
+<div id="cur"></div>
+<div id="cur2"></div>
 
 <nav>
-  <a href="#" class="nav-logo">BPP</a>
-  <ul class="nav-links">
+  <a href="#" class="nlogo">BPP_</a>
+  <ul class="nlinks">
     <li><a href="#about">About</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#projects">Projects</a></li>
+    <li><a href="#achievements">Achievements</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <a href="Pokharel_BishnuPrasad_Resume.pdf" download class="ncv">Download CV</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-content">
-    <div class="hero-tag">// Available for full-time roles</div>
-    <h1 class="hero-name">
-      Bishnu Prasad
-      <span>Pokharel</span>
+  <div class="hleft">
+    <div class="hbadge">Available for full-time roles</div>
+    <h1 class="hname">
+      <span class="n1">Bishnu</span>
+      <span class="n2">Pokharel</span>
     </h1>
-    <p class="hero-desc">
-      Automation & Controls Engineer meets Software Developer. I build systems that bridge industrial hardware with intelligent software — from PLC-controlled production lines to AI-powered applications.
-    </p>
-    <div class="hero-cta">
-      <a href="#projects" class="btn-primary">View My Work</a>
-      <a href="#contact" class="btn-secondary">Get In Touch</a>
+    <div class="htitle">Multidisciplinary Engineer</div>
+    <p class="hdesc">I build things that <strong>bridge hardware and software</strong> — from PLC-controlled production lines and vision systems to AI-powered applications and IoT networks. CS &amp; Engineering Graduate, GPA 3.9, Magna Cum Laude.</p>
+    <div class="hbtns">
+      <a href="#projects" class="bg">View My Work</a>
+      <a href="#contact" class="bo">Get In Touch</a>
     </div>
   </div>
-  <div class="hero-scroll">
-    <span>Scroll</span>
-    <div class="scroll-line"></div>
+  <div class="hright">
+    <div class="pcon float">
+      
+      <div class="pborder"></div>
+      <div class="pframe">
+        <img src="Bishnu.jpg" alt="Bishnu Prasad Pokharel">
+      </div>
+      <div class="ptag1">GPA 3.9 · Magna Cum Laude</div>
+    </div>
+    <div class="char-wrap">
+      
+      <svg id="char-svg" viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg" id="char-hero" style="width:480px;height:560px;filter:drop-shadow(0 20px 80px rgba(110,231,247,0.3));animation:charFloat 3s ease-in-out infinite;overflow:visible">
+        <defs>
+          <radialGradient id="skinG" cx="50%" cy="40%" r="60%"><stop offset="0%" stop-color="#f4a56a"/><stop offset="100%" stop-color="#c87535"/></radialGradient>
+          <radialGradient id="bodyG" cx="50%" cy="30%" r="70%"><stop offset="0%" stop-color="#2a2a3e"/><stop offset="100%" stop-color="#13131e"/></radialGradient>
+          <radialGradient id="screenG" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#a78bfa"/><stop offset="50%" stop-color="#6ee7f7"/><stop offset="100%" stop-color="#34d399"/></radialGradient>
+        </defs>
+        <!-- DESK -->
+        <rect x="10" y="200" width="180" height="8" rx="2" fill="#1a1a2e" stroke="#6ee7f7" stroke-width="0.5" opacity="0.9"/>
+        <rect x="28" y="208" width="8" height="45" rx="2" fill="#111120"/>
+        <rect x="164" y="208" width="8" height="45" rx="2" fill="#111120"/>
+        <!-- MONITOR -->
+        <rect x="90" y="145" width="75" height="52" rx="4" fill="#0a0a14" stroke="#6ee7f7" stroke-width="1" opacity="0.9"/>
+        <rect x="94" y="149" width="67" height="44" rx="2" fill="url(#screenG)" opacity="0.85"/>
+        <rect x="94" y="149" width="67" height="44" rx="2" fill="url(#screenG)" opacity="0.2" style="filter:blur(4px)"/>
+        <rect x="98" y="154" width="32" height="2" rx="1" fill="white" opacity="0.8"/>
+        <rect x="98" y="159" width="24" height="2" rx="1" fill="#6ee7f7" opacity="0.9"/>
+        <rect x="98" y="164" width="38" height="2" rx="1" fill="#a78bfa" opacity="0.9"/>
+        <rect x="98" y="169" width="20" height="2" rx="1" fill="#34d399" opacity="0.9"/>
+        <rect x="98" y="174" width="30" height="2" rx="1" fill="white" opacity="0.7"/>
+        <rect x="98" y="179" width="26" height="2" rx="1" fill="#fbbf24" opacity="0.8"/>
+        <!-- Monitor stand -->
+        <rect x="120" y="197" width="8" height="6" rx="1" fill="#1a1a2e"/>
+        <rect x="112" y="201" width="24" height="3" rx="1" fill="#1a1a2e"/>
+        <!-- KEYBOARD -->
+        <rect x="45" y="190" width="65" height="13" rx="3" fill="#1a1a2e" stroke="rgba(110,231,247,0.3)" stroke-width="0.5"/>
+        <rect x="48" y="192" width="8" height="3" rx="1" fill="#222235"/>
+        <rect x="58" y="192" width="8" height="3" rx="1" fill="#222235"/>
+        <rect x="68" y="192" width="8" height="3" rx="1" fill="#222235"/>
+        <rect x="78" y="192" width="8" height="3" rx="1" fill="#222235"/>
+        <rect x="88" y="192" width="8" height="3" rx="1" fill="#222235"/>
+        <rect x="50" y="197" width="20" height="3" rx="1" fill="#222235"/>
+        <rect x="72" y="197" width="6" height="3" rx="1" fill="#6ee7f7" opacity="0.5"/>
+        <rect x="80" y="197" width="20" height="3" rx="1" fill="#222235"/>
+        <!-- BODY -->
+        <rect x="62" y="128" width="58" height="74" rx="16" fill="url(#bodyG)"/>
+        <path d="M86 128 Q100 138 114 128" fill="none" stroke="rgba(110,231,247,0.25)" stroke-width="1.5"/>
+        <!-- Arms -->
+        <path d="M62 138 Q44 150 50 172 Q54 184 68 187" stroke="#2a2a3e" stroke-width="16" fill="none" stroke-linecap="round"/>
+        <ellipse cx="68" cy="187" rx="8" ry="6" fill="url(#skinG)" transform="rotate(-20,68,187)"/>
+        <path d="M138 138 Q156 150 150 172 Q146 184 132 187" stroke="#2a2a3e" stroke-width="16" fill="none" stroke-linecap="round"/>
+        <ellipse cx="132" cy="187" rx="8" ry="6" fill="url(#skinG)" transform="rotate(20,132,187)"/>
+        <!-- Neck -->
+        <rect x="91" y="116" width="18" height="16" rx="6" fill="url(#skinG)"/>
+        <!-- HEAD -->
+        <ellipse cx="100" cy="92" rx="38" ry="40" fill="url(#skinG)"/>
+        <!-- CAP -->
+        <rect x="62" y="57" width="76" height="22" rx="8" fill="#1a1a2e"/>
+        <ellipse cx="100" cy="57" rx="40" ry="10" fill="#111120"/>
+        <path d="M62 79 Q100 88 138 79" fill="#0d0d14"/>
+        <path d="M58 80 Q100 92 142 80" fill="none" stroke="rgba(110,231,247,0.35)" stroke-width="1"/>
+        <circle cx="100" cy="65" r="6" fill="#6ee7f7" opacity="0.85"/>
+        <text x="100" y="68.5" text-anchor="middle" font-size="5.5" fill="#000" font-weight="bold" font-family="monospace">BP</text>
+        <!-- Ears -->
+        <ellipse cx="62" cy="94" rx="8" ry="10" fill="url(#skinG)"/>
+        <ellipse cx="138" cy="94" rx="8" ry="10" fill="url(#skinG)"/>
+        <ellipse cx="62" cy="94" rx="5" ry="7" fill="#c87535" opacity="0.4"/>
+        <ellipse cx="138" cy="94" rx="5" ry="7" fill="#c87535" opacity="0.4"/>
+        <!-- Eyebrows -->
+        <path d="M78 76 Q87 71 96 74" stroke="#3d1505" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M104 74 Q113 71 122 76" stroke="#3d1505" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <!-- EYES - sockets (white) -->
+        <ellipse cx="86" cy="90" rx="12" ry="13" fill="white"/>
+        <ellipse cx="114" cy="90" rx="12" ry="13" fill="white"/>
+        <!-- Eye socket shadows -->
+        <ellipse cx="86" cy="90" rx="12" ry="13" fill="none" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+        <ellipse cx="114" cy="90" rx="12" ry="13" fill="none" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+        <!-- LEFT PUPIL GROUP - cursor tracking -->
+        <g id="left-eye">
+          <circle cx="86" cy="90" r="8" fill="#1a0030"/>
+          <circle cx="86" cy="90" r="5.5" fill="#5b1fa0"/>
+          <circle cx="86" cy="90" r="3" fill="#6ee7f7"/>
+          <circle cx="83.5" cy="87.5" r="1.5" fill="white" opacity="0.95"/>
+        </g>
+        <!-- RIGHT PUPIL GROUP - cursor tracking -->
+        <g id="right-eye">
+          <circle cx="114" cy="90" r="8" fill="#1a0030"/>
+          <circle cx="114" cy="90" r="5.5" fill="#5b1fa0"/>
+          <circle cx="114" cy="90" r="3" fill="#6ee7f7"/>
+          <circle cx="111.5" cy="87.5" r="1.5" fill="white" opacity="0.95"/>
+        </g>
+        <!-- Eyelid overlay -->
+        <path d="M74 84 Q86 79 98 84" fill="url(#skinG)" opacity="0.5"/>
+        <path d="M102 84 Q114 79 126 84" fill="url(#skinG)" opacity="0.5"/>
+        <!-- Nose -->
+        <ellipse cx="100" cy="102" rx="5" ry="4" fill="#c87535" opacity="0.55"/>
+        <circle cx="97" cy="103" r="2" fill="#3d1505" opacity="0.3"/>
+        <circle cx="103" cy="103" r="2" fill="#3d1505" opacity="0.3"/>
+        <!-- Smile -->
+        <path d="M88 113 Q100 121 112 113" fill="none" stroke="#3d1505" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M90 113 Q100 119 110 113" fill="#c87535" opacity="0.35"/>
+        <!-- Screen light on face -->
+        <ellipse cx="118" cy="105" rx="22" ry="28" fill="rgba(110,231,247,0.06)"/>
+      </svg>
+      <div class="char-glow"></div>
+    </div>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section class="about" id="about">
-  <div class="section-label">// 01. About</div>
-  <h2 class="section-title">Who I Am</h2>
-  <div class="about-grid">
-    <div class="about-text">
-      <p>I'm a <strong>Computer Science & Engineering graduate</strong> from the University of Toledo (GPA 3.9, Magna Cum Laude) with hands-on experience building automation systems from concept to production floor.</p>
-      <p>At <strong>Tenneco Inc.</strong>, I served as the primary electrical design engineer — self-teaching AutoCAD Electrical, programming PLCs, building HMI systems, and commissioning custom automated machinery from scratch in a cross-disciplinary team.</p>
-      <p>On the software side, I build <strong>AI-powered applications</strong> using OpenAI API, full-stack web apps, and IoT systems. I thrive at the intersection of hardware precision and software intelligence.</p>
-      <p>Currently relocating to <strong>New Jersey</strong> and actively seeking full-time engineering opportunities.</p>
+<!-- ABOUT - Kritan style -->
+<section class="surface" id="about">
+  
+  <h2 class="st">A bit about me.</h2>
+  <div class="about-grid-new">
+    <!-- ASTRONAUT CHARACTER for about section -->
+    <div class="about-char rev">
+      <svg viewBox="0 0 260 340" xmlns="http://www.w3.org/2000/svg" id="astro-svg" style="width:280px;height:350px;filter:drop-shadow(0 15px 40px rgba(110,231,247,0.2));animation:charFloat 4s ease-in-out infinite;overflow:visible">
+        <defs>
+          <radialGradient id="suitG" cx="45%" cy="35%" r="65%">
+            <stop offset="0%" stop-color="#e8eeff"/>
+            <stop offset="50%" stop-color="#c8d4f0"/>
+            <stop offset="100%" stop-color="#8899cc"/>
+          </radialGradient>
+          <radialGradient id="helmetG" cx="35%" cy="30%" r="65%">
+            <stop offset="0%" stop-color="#ddeeff"/>
+            <stop offset="40%" stop-color="#aaccee"/>
+            <stop offset="100%" stop-color="#556688"/>
+          </radialGradient>
+          <radialGradient id="visorG" cx="30%" cy="25%" r="70%">
+            <stop offset="0%" stop-color="#6ee7f7" stop-opacity="0.9"/>
+            <stop offset="40%" stop-color="#a78bfa" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#1a0a40" stop-opacity="0.95"/>
+          </radialGradient>
+          <radialGradient id="skinG4" cx="50%" cy="40%" r="60%">
+            <stop offset="0%" stop-color="#f4a56a"/>
+            <stop offset="100%" stop-color="#c87535"/>
+          </radialGradient>
+          <filter id="aGlow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="3" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- FLOATING ELEMENTS - stars around astronaut -->
+        <circle cx="30" cy="60" r="3" fill="#6ee7f7" opacity="0.7" filter="url(#aGlow)"/>
+        <circle cx="230" cy="80" r="2" fill="#a78bfa" opacity="0.8" filter="url(#aGlow)"/>
+        <circle cx="245" cy="180" r="3" fill="#34d399" opacity="0.6" filter="url(#aGlow)"/>
+        <circle cx="20" cy="220" r="2" fill="#fbbf24" opacity="0.7" filter="url(#aGlow)"/>
+        <circle cx="240" cy="260" r="2.5" fill="#6ee7f7" opacity="0.5" filter="url(#aGlow)"/>
+        <!-- Small floating laptop -->
+        <g style="animation:float2 3s 0.5s ease-in-out infinite">
+          <rect x="195" y="140" width="50" height="34" rx="4" fill="#1a1a2e" stroke="#6ee7f7" stroke-width="1"/>
+          <rect x="199" y="144" width="42" height="26" rx="2" fill="url(#visorG)" opacity="0.8"/>
+          <rect x="193" y="174" width="54" height="4" rx="2" fill="#1a1a2e"/>
+          <rect x="201" y="148" width="22" height="1.5" rx="1" fill="white" opacity="0.7"/>
+          <rect x="201" y="152" width="16" height="1.5" rx="1" fill="#6ee7f7" opacity="0.8"/>
+          <rect x="201" y="156" width="26" height="1.5" rx="1" fill="#a78bfa" opacity="0.8"/>
+          <rect x="201" y="160" width="14" height="1.5" rx="1" fill="#34d399" opacity="0.8"/>
+        </g>
+        <!-- Small floating wrench -->
+        <g style="animation:float3 3.5s 1s ease-in-out infinite">
+          <rect x="15" y="150" width="28" height="7" rx="3" fill="#fbbf24" opacity="0.9"/>
+          <circle cx="15" cy="153" r="7" fill="none" stroke="#fbbf24" stroke-width="3" opacity="0.8"/>
+          <circle cx="43" cy="153" r="5" fill="none" stroke="#fbbf24" stroke-width="3" opacity="0.8"/>
+        </g>
+
+        <!-- SUIT BODY -->
+        <rect x="75" y="185" width="110" height="115" rx="28" fill="url(#suitG)"/>
+        <!-- Suit detail lines -->
+        <path d="M98 195 Q130 205 162 195" fill="none" stroke="rgba(110,231,247,0.3)" stroke-width="1.5"/>
+        <!-- Chest pack / life support -->
+        <rect x="100" y="208" width="60" height="45" rx="8" fill="#c8d4f0" stroke="rgba(110,231,247,0.4)" stroke-width="1"/>
+        <!-- Chest pack screen -->
+        <rect x="106" y="214" width="48" height="28" rx="4" fill="#0a0a20" stroke="#6ee7f7" stroke-width="0.8"/>
+        <rect x="110" y="218" width="18" height="2" rx="1" fill="#6ee7f7" opacity="0.9"/>
+        <rect x="110" y="222" width="12" height="2" rx="1" fill="#34d399" opacity="0.9"/>
+        <rect x="110" y="226" width="22" height="2" rx="1" fill="#a78bfa" opacity="0.9"/>
+        <rect x="110" y="230" width="10" height="2" rx="1" fill="#fbbf24" opacity="0.9"/>
+        <rect x="110" y="234" width="16" height="2" rx="1" fill="#6ee7f7" opacity="0.7"/>
+        <!-- Chest buttons -->
+        <circle cx="145" cy="220" r="4" fill="#6ee7f7" opacity="0.8" filter="url(#aGlow)"/>
+        <circle cx="145" cy="232" r="4" fill="#34d399" opacity="0.8" filter="url(#aGlow)"/>
+        <circle cx="145" cy="244" r="4" fill="#fbbf24" opacity="0.8" filter="url(#aGlow)"/>
+
+        <!-- LEFT ARM -->
+        <path d="M75 200 Q48 215 42 240 Q38 258 50 268" stroke="url(#suitG)" stroke-width="28" fill="none" stroke-linecap="round"/>
+        <!-- Left glove -->
+        <ellipse cx="52" cy="272" rx="18" ry="14" fill="#667799" stroke="#6ee7f7" stroke-width="1"/>
+        <!-- Holding flag/diploma -->
+        <rect x="34" y="240" width="4" height="38" rx="2" fill="#fbbf24"/>
+        <rect x="38" y="240" width="26" height="20" rx="2" fill="#6ee7f7" opacity="0.9"/>
+        <text x="51" y="253" text-anchor="middle" font-size="7" fill="#000" font-weight="bold" font-family="monospace">3.9</text>
+
+        <!-- RIGHT ARM -->
+        <path d="M185 200 Q212 215 218 240 Q222 258 210 268" stroke="url(#suitG)" stroke-width="28" fill="none" stroke-linecap="round"/>
+        <!-- Right glove -->
+        <ellipse cx="208" cy="272" rx="18" ry="14" fill="#667799" stroke="#6ee7f7" stroke-width="1"/>
+        <!-- Thumbs up gesture -->
+        <path d="M200 268 Q208 258 216 268" fill="none" stroke="#8899aa" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="208" cy="260" r="6" fill="#8899aa"/>
+
+        <!-- LEGS -->
+        <rect x="93" y="293" width="32" height="42" rx="12" fill="url(#suitG)"/>
+        <rect x="135" y="293" width="32" height="42" rx="12" fill="url(#suitG)"/>
+        <!-- Boots -->
+        <rect x="86" y="326" width="44" height="18" rx="10" fill="#445566" stroke="#6ee7f7" stroke-width="0.8"/>
+        <rect x="130" y="326" width="44" height="18" rx="10" fill="#445566" stroke="#6ee7f7" stroke-width="0.8"/>
+        <!-- Boot thrusters glow -->
+        <ellipse cx="108" cy="346" rx="18" ry="5" fill="#6ee7f7" opacity="0.2" filter="url(#aGlow)"/>
+        <ellipse cx="152" cy="346" rx="18" ry="5" fill="#6ee7f7" opacity="0.2" filter="url(#aGlow)"/>
+
+        <!-- NECK RING -->
+        <rect x="108" y="172" width="44" height="16" rx="6" fill="#aabbdd" stroke="#6ee7f7" stroke-width="1"/>
+        <rect x="114" y="175" width="32" height="10" rx="4" fill="#8899bb"/>
+
+        <!-- HELMET -->
+        <ellipse cx="130" cy="125" rx="62" ry="68" fill="url(#helmetG)" stroke="#8899bb" stroke-width="2"/>
+        <!-- Helmet top detail -->
+        <ellipse cx="130" cy="62" rx="28" ry="10" fill="#aabbdd" opacity="0.6"/>
+        <!-- Antenna on helmet -->
+        <rect x="127" y="42" width="6" height="24" rx="3" fill="#8899bb"/>
+        <circle cx="130" cy="36" r="8" fill="#334455" stroke="#6ee7f7" stroke-width="1.5"/>
+        <circle cx="130" cy="36" r="4" fill="#6ee7f7" opacity="0.9" filter="url(#aGlow)"/>
+
+        <!-- VISOR - big reflective -->
+        <ellipse cx="130" cy="128" rx="46" ry="50" fill="url(#visorG)" stroke="#6ee7f7" stroke-width="1.5"/>
+        <!-- Visor reflection -->
+        <ellipse cx="112" cy="108" rx="14" ry="22" fill="rgba(255,255,255,0.12)" transform="rotate(-15,112,108)"/>
+        <ellipse cx="148" cy="118" rx="8" ry="14" fill="rgba(255,255,255,0.08)" transform="rotate(10,148,118)"/>
+
+        <!-- FACE visible inside visor -->
+        <ellipse cx="130" cy="130" rx="32" ry="35" fill="url(#skinG4)" opacity="0.85"/>
+        <!-- Eyes inside visor -->
+        <g id="astro-leye">
+          <ellipse cx="118" cy="122" rx="9" ry="10" fill="white" opacity="0.9"/>
+          <circle cx="118" cy="122" r="6" fill="#1a0030"/>
+          <circle cx="118" cy="122" r="3.5" fill="#6ee7f7" filter="url(#aGlow)"/>
+          <circle cx="115.5" cy="119.5" r="1.5" fill="white" opacity="0.9"/>
+        </g>
+        <g id="astro-reye">
+          <ellipse cx="142" cy="122" rx="9" ry="10" fill="white" opacity="0.9"/>
+          <circle cx="142" cy="122" r="6" fill="#1a0030"/>
+          <circle cx="142" cy="122" r="3.5" fill="#6ee7f7" filter="url(#aGlow)"/>
+          <circle cx="139.5" cy="119.5" r="1.5" fill="white" opacity="0.9"/>
+        </g>
+        <!-- Happy smile -->
+        <path d="M118 140 Q130 150 142 140" fill="none" stroke="#3d1505" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- Nose -->
+        <ellipse cx="130" cy="133" rx="4" ry="3" fill="#c87535" opacity="0.5"/>
+
+        <!-- Visor outer glow -->
+        <ellipse cx="130" cy="128" rx="46" ry="50" fill="none" stroke="#6ee7f7" stroke-width="1" opacity="0.4" filter="url(#aGlow)"/>
+
+        <!-- Ground shadow -->
+        <ellipse cx="130" cy="346" rx="75" ry="8" fill="rgba(110,231,247,0.08)"/>
+      </svg>
     </div>
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-number">3.9</div>
-        <div class="stat-label">GPA — Magna Cum Laude</div>
+    <div class="about-wrap rev">
+    <p class="about-intro">
+      I write production software, design electrical control systems, and build hardware that moves the world. For two years I worked as an <strong>Engineering Co-op at Tenneco Inc.</strong>, a Tier 1 automotive manufacturer — self-teaching AutoCAD Electrical, programming PLC systems in Structured Text and Ladder Logic, developing HMI/SCADA dashboards, commissioning custom automated machinery, and integrating Cognex vision systems and Epson robots into live production lines. My most complex schematics became the new standard in the plant.
+    </p>
+    <p class="about-intro">
+      On the software side, I built <strong>MoneyMate</strong> — a full-stack AI application using OpenAI API and OCR that achieves 95% extraction accuracy — and <strong>SilentBell</strong>, an IoT hardware system I designed, wired, and fabricated from scratch using AutoCAD Electrical, SolidWorks, and 3D printing. I graduated from the <strong>University of Toledo</strong> with a 3.9 GPA and Magna Cum Laude honors.
+    </p>
+    <p class="about-intro">
+      Outside engineering, I'm a passionate cook — my family owns a restaurant back home in Nepal and I grew up alongside a father who is a genuinely great chef. I'm a <strong>Manchester United</strong> supporter, an active soccer player, and someone who has spoken four languages since childhood. I've lived in Nepal, visited India, Korea, and Qatar, and I am now building my career in the United States.
+    </p>
+    <div class="about-meta">
+      <div class="am-section">
+        <h4>Education</h4>
+        <div class="am-item">
+          <span class="am-label">Degree</span>
+          <span class="am-val">B.S. Computer Science &amp; Engineering</span>
+        </div>
+        <div class="am-item">
+          <span class="am-label">University</span>
+          <span class="am-val">The University of Toledo</span>
+        </div>
+        <div class="am-item">
+          <span class="am-label">Graduated</span>
+          <span class="am-val">December 2025 · GPA 3.9</span>
+        </div>
+        <div class="am-tags">
+          <span class="am-tag">Magna Cum Laude</span>
+          <span class="am-tag">President's List × 5</span>
+          <span class="am-tag">Dean's List × 9</span>
+          <span class="am-tag">Ebeid STEM Scholar × 3</span>
+        </div>
       </div>
-      <div class="stat-card">
-        <div class="stat-number">20mo</div>
-        <div class="stat-label">Engineering Co-op</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">30+</div>
-        <div class="stat-label">Machines Designed</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">$1M+</div>
-        <div class="stat-label">Project Value</div>
+      <div class="am-section">
+        <h4>Languages &amp; Interests</h4>
+        <div class="am-item">
+          <span class="am-label">Languages</span>
+          <div class="am-tags" style="margin-top:0.3rem">
+            <span class="am-tag">English</span>
+            <span class="am-tag">Nepali</span>
+            <span class="am-tag">Newari</span>
+            <span class="am-tag">Hindi</span>
+          </div>
+        </div>
+        <div class="am-item" style="margin-top:0.8rem">
+          <span class="am-label">Interests</span>
+          <div class="am-tags" style="margin-top:0.3rem">
+            <span class="am-tag">⚽ Soccer</span>
+            <span class="am-tag">🍳 Cooking</span>
+            <span class="am-tag">🚁 Drones</span>
+            <span class="am-tag">🧮 Mathematics</span>
+            <span class="am-tag">🔴 Man United</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -702,235 +619,1087 @@
 
 <!-- SKILLS -->
 <section id="skills">
-  <div class="section-label">// 02. Skills</div>
-  <h2 class="section-title">What I Know</h2>
-  <div class="skills-grid">
-    <div class="skill-category">
-      <div class="skill-cat-title">⚡ Automation & Controls</div>
-      <div class="skill-tags">
-        <span class="skill-tag">PLC Programming</span>
-        <span class="skill-tag">Structured Text</span>
-        <span class="skill-tag">Ladder Logic</span>
-        <span class="skill-tag">MotionWorks IEC</span>
-        <span class="skill-tag">Servo Motors</span>
-        <span class="skill-tag">VFDs</span>
-        <span class="skill-tag">Ethernet/IP</span>
-        <span class="skill-tag">Level I/II Systems</span>
+  
+  <h2 class="st">What I Know</h2>
+  <div class="skgrid">
+    <div class="skcard rev">
+      <div class="ski">⚡</div>
+      <div class="skc">Automation &amp; Controls</div>
+      <div class="skl">
+        <span class="skp">PLC Programming</span><span class="skp">Structured Text</span><span class="skp">Ladder Logic</span>
+        <span class="skp">MotionWorks IEC</span><span class="skp">Servo Motors</span><span class="skp">VFDs</span>
+        <span class="skp">Ethernet/IP</span><span class="skp">Banner Safety</span><span class="skp">Door Interlocks</span>
       </div>
     </div>
-    <div class="skill-category">
-      <div class="skill-cat-title">🖥️ HMI & SCADA</div>
-      <div class="skill-tags">
-        <span class="skill-tag">Movicon HMI</span>
-        <span class="skill-tag">Real-time Dashboards</span>
-        <span class="skill-tag">SCADA Systems</span>
-        <span class="skill-tag">Cognex Vision</span>
-        <span class="skill-tag">Keyence Sensors</span>
-        <span class="skill-tag">Banner Safety</span>
-        <span class="skill-tag">Epson Robots</span>
+    <div class="skcard rev">
+      <div class="ski">🖥️</div>
+      <div class="skc">HMI, SCADA &amp; Vision</div>
+      <div class="skl">
+        <span class="skp">Movicon HMI/SCADA</span><span class="skp">Cognex Vision</span><span class="skp">Keyence Sensors</span>
+        <span class="skp">Epson Robots</span><span class="skp">Real-time Dashboards</span><span class="skp">OPC UA</span>
       </div>
     </div>
-    <div class="skill-category">
-      <div class="skill-cat-title">📐 Design & Electrical</div>
-      <div class="skill-tags">
-        <span class="skill-tag">AutoCAD Electrical</span>
-        <span class="skill-tag">SolidWorks</span>
-        <span class="skill-tag">Creo</span>
-        <span class="skill-tag">Panel Design</span>
-        <span class="skill-tag">3D Printing</span>
-        <span class="skill-tag">FMEA</span>
-        <span class="skill-tag">Root Cause Analysis</span>
+    <div class="skcard rev">
+      <div class="ski">📐</div>
+      <div class="skc">Design &amp; Electrical</div>
+      <div class="skl">
+        <span class="skp">AutoCAD Electrical</span><span class="skp">SolidWorks</span><span class="skp">Creo</span>
+        <span class="skp">3D Printing</span><span class="skp">Panel Wiring</span><span class="skp">FMEA</span><span class="skp">Root Cause Analysis</span>
       </div>
     </div>
-    <div class="skill-category">
-      <div class="skill-cat-title">💻 Software & AI</div>
-      <div class="skill-tags">
-        <span class="skill-tag">Python</span>
-        <span class="skill-tag">Java</span>
-        <span class="skill-tag">C/C++</span>
-        <span class="skill-tag">JavaScript</span>
-        <span class="skill-tag">Node.js</span>
-        <span class="skill-tag">React Native</span>
-        <span class="skill-tag">OpenAI API</span>
-        <span class="skill-tag">MQTT</span>
-        <span class="skill-tag">SQL</span>
-        <span class="skill-tag">MongoDB</span>
-        <span class="skill-tag">Linux</span>
-        <span class="skill-tag">Git</span>
+    <div class="skcard rev">
+      <div class="ski">💻</div>
+      <div class="skc">Software &amp; AI</div>
+      <div class="skl">
+        <span class="skp">Python</span><span class="skp">Java</span><span class="skp">C/C++</span><span class="skp">JavaScript</span>
+        <span class="skp">Node.js</span><span class="skp">React Native</span><span class="skp">OpenAI API</span>
+        <span class="skp">MQTT</span><span class="skp">SQL</span><span class="skp">MongoDB</span><span class="skp">Linux</span><span class="skp">Git</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- WHAT I DO -->
+<section class="whatido" id="whatido">
+  
+  <h2 class="st">What I <span style="-webkit-text-stroke:1.5px var(--a1);-webkit-text-fill-color:transparent">Build</span></h2>
+  <div class="wid-grid">
+    <div class="wid-char rev">
+      <!-- CREATIVE 3D ROBOT ENGINEER CHARACTER -->
+      <div class="robo-wrap">
+        <svg id="robo-svg" viewBox="0 0 300 380" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="rMetalG" cx="40%" cy="30%" r="70%">
+              <stop offset="0%" stop-color="#8899cc"/>
+              <stop offset="60%" stop-color="#445588"/>
+              <stop offset="100%" stop-color="#223366"/>
+            </radialGradient>
+            <radialGradient id="rDarkG" cx="50%" cy="30%" r="70%">
+              <stop offset="0%" stop-color="#334466"/>
+              <stop offset="100%" stop-color="#111122"/>
+            </radialGradient>
+            <radialGradient id="rGlowG" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#6ee7f7" stop-opacity="1"/>
+              <stop offset="100%" stop-color="#6ee7f7" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="rGlow" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <linearGradient id="legGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#556688"/>
+              <stop offset="100%" stop-color="#223355"/>
+            </linearGradient>
+          </defs>
+
+          <!-- GROUND SHADOW -->
+          <ellipse cx="150" cy="375" rx="85" ry="7" fill="rgba(110,231,247,0.12)"/>
+
+          <!-- LEGS -->
+          <rect x="105" y="270" width="32" height="80" rx="10" fill="url(#legGrad)"/>
+          <rect x="163" y="270" width="32" height="80" rx="10" fill="url(#legGrad)"/>
+          <!-- Knee joints -->
+          <circle cx="121" cy="290" r="10" fill="url(#rMetalG)" stroke="#6ee7f7" stroke-width="0.8"/>
+          <circle cx="179" cy="290" r="10" fill="url(#rMetalG)" stroke="#6ee7f7" stroke-width="0.8"/>
+          <!-- Feet -->
+          <rect x="98" y="340" width="44" height="18" rx="8" fill="url(#rDarkG)" stroke="#6ee7f7" stroke-width="0.8"/>
+          <rect x="156" y="340" width="44" height="18" rx="8" fill="url(#rDarkG)" stroke="#6ee7f7" stroke-width="0.8"/>
+          <!-- Foot glow lines -->
+          <rect x="104" y="352" width="32" height="2" rx="1" fill="#6ee7f7" opacity="0.6"/>
+          <rect x="162" y="352" width="32" height="2" rx="1" fill="#6ee7f7" opacity="0.6"/>
+
+          <!-- TORSO -->
+          <rect x="85" y="155" width="130" height="120" rx="18" fill="url(#rMetalG)"/>
+          <!-- Chest panel -->
+          <rect x="95" y="165" width="110" height="90" rx="10" fill="url(#rDarkG)"/>
+          <!-- Chest screen -->
+          <rect x="105" y="175" width="90" height="60" rx="6" fill="#050510" stroke="#6ee7f7" stroke-width="1"/>
+          <!-- Screen content - animated -->
+          <rect id="chest-screen" x="109" y="179" width="82" height="52" rx="4" fill="#0a0a20"/>
+          <rect x="113" y="184" width="40" height="2" rx="1" fill="#6ee7f7" opacity="0.8"/>
+          <rect x="113" y="189" width="28" height="2" rx="1" fill="#a78bfa" opacity="0.9"/>
+          <rect x="113" y="194" width="50" height="2" rx="1" fill="#34d399" opacity="0.8"/>
+          <rect x="113" y="199" width="22" height="2" rx="1" fill="#fbbf24" opacity="0.9"/>
+          <rect x="113" y="204" width="44" height="2" rx="1" fill="#f472b6" opacity="0.8"/>
+          <rect x="113" y="209" width="35" height="2" rx="1" fill="#6ee7f7" opacity="0.7"/>
+          <rect x="113" y="214" width="48" height="2" rx="1" fill="white" opacity="0.6"/>
+          <rect id="robo-cursor" x="113" y="220" width="8" height="2" rx="1" fill="#6ee7f7"/>
+          <!-- Side vents -->
+          <rect x="89" y="178" width="4" height="6" rx="1" fill="#6ee7f7" opacity="0.5"/>
+          <rect x="89" y="188" width="4" height="6" rx="1" fill="#6ee7f7" opacity="0.5"/>
+          <rect x="89" y="198" width="4" height="6" rx="1" fill="#6ee7f7" opacity="0.5"/>
+          <rect x="207" y="178" width="4" height="6" rx="1" fill="#6ee7f7" opacity="0.5"/>
+          <rect x="207" y="188" width="4" height="6" rx="1" fill="#6ee7f7" opacity="0.5"/>
+          <rect x="207" y="198" width="4" height="6" rx="1" fill="#6ee7f7" opacity="0.5"/>
+          <!-- Bottom accent line -->
+          <rect x="95" y="245" width="110" height="2" rx="1" fill="#6ee7f7" opacity="0.4"/>
+          <circle cx="125" cy="252" r="5" fill="#6ee7f7" opacity="0.6" filter="url(#rGlow)"/>
+          <circle cx="150" cy="252" r="5" fill="#a78bfa" opacity="0.6" filter="url(#rGlow)"/>
+          <circle cx="175" cy="252" r="5" fill="#34d399" opacity="0.6" filter="url(#rGlow)"/>
+
+          <!-- LEFT ARM - extended/gesturing -->
+          <rect x="45" y="158" width="42" height="24" rx="10" fill="url(#rMetalG)"/>
+          <circle cx="47" cy="170" r="12" fill="url(#rMetalG)" stroke="#6ee7f7" stroke-width="0.8"/>
+          <!-- Left hand with wrench -->
+          <rect x="18" y="160" width="32" height="20" rx="8" fill="url(#rDarkG)" stroke="#6ee7f7" stroke-width="0.8"/>
+          <!-- Wrench -->
+          <rect x="8" y="164" width="20" height="5" rx="2" fill="#fbbf24"/>
+          <circle cx="8" cy="166" r="5" fill="none" stroke="#fbbf24" stroke-width="2.5"/>
+          <circle cx="28" cy="166" r="4" fill="none" stroke="#fbbf24" stroke-width="2.5"/>
+
+          <!-- RIGHT ARM - holding circuit board up -->
+          <rect x="213" y="158" width="42" height="24" rx="10" fill="url(#rMetalG)"/>
+          <circle cx="253" cy="170" r="12" fill="url(#rMetalG)" stroke="#6ee7f7" stroke-width="0.8"/>
+          <!-- Right hand holding chip -->
+          <rect x="255" y="155" width="30" height="22" rx="6" fill="url(#rDarkG)" stroke="#6ee7f7" stroke-width="0.8"/>
+          <!-- Chip on hand -->
+          <rect x="260" y="159" width="20" height="14" rx="3" fill="#1a2a4a" stroke="#6ee7f7" stroke-width="1"/>
+          <circle cx="265" cy="163" r="2" fill="#6ee7f7" opacity="0.9"/>
+          <circle cx="272" cy="163" r="2" fill="#a78bfa" opacity="0.9"/>
+          <circle cx="265" cy="169" r="2" fill="#34d399" opacity="0.9"/>
+          <circle cx="272" cy="169" r="2" fill="#fbbf24" opacity="0.9"/>
+          <!-- Glow from chip -->
+          <ellipse cx="270" cy="166" rx="12" ry="9" fill="rgba(110,231,247,0.1)" filter="url(#rGlow)"/>
+
+          <!-- NECK -->
+          <rect x="128" y="138" width="44" height="22" rx="8" fill="url(#rMetalG)"/>
+          <rect x="134" y="142" width="32" height="14" rx="5" fill="url(#rDarkG)"/>
+          <rect x="138" y="145" width="24" height="2" rx="1" fill="#6ee7f7" opacity="0.6"/>
+          <rect x="138" y="149" width="24" height="2" rx="1" fill="#6ee7f7" opacity="0.4"/>
+
+          <!-- HEAD -->
+          <rect x="88" y="58" width="124" height="85" rx="22" fill="url(#rMetalG)"/>
+          <!-- Head detail lines -->
+          <rect x="94" y="64" width="112" height="73" rx="16" fill="url(#rDarkG)"/>
+          <!-- Antenna -->
+          <rect x="147" y="35" width="6" height="28" rx="3" fill="url(#rMetalG)"/>
+          <circle cx="150" cy="28" r="10" fill="url(#rMetalG)" stroke="#6ee7f7" stroke-width="1"/>
+          <circle id="antenna-glow" cx="150" cy="28" r="6" fill="#6ee7f7" filter="url(#rGlow)"/>
+          <!-- Ear panels -->
+          <rect x="76" y="74" width="14" height="40" rx="6" fill="url(#rMetalG)" stroke="#6ee7f7" stroke-width="0.5"/>
+          <rect x="210" y="74" width="14" height="40" rx="6" fill="url(#rMetalG)" stroke="#6ee7f7" stroke-width="0.5"/>
+          <rect x="79" y="82" width="8" height="6" rx="2" fill="#6ee7f7" opacity="0.5"/>
+          <rect x="213" y="82" width="8" height="6" rx="2" fill="#6ee7f7" opacity="0.5"/>
+          <rect x="79" y="92" width="8" height="4" rx="2" fill="#a78bfa" opacity="0.5"/>
+          <rect x="213" y="92" width="8" height="4" rx="2" fill="#a78bfa" opacity="0.5"/>
+
+          <!-- VISOR/EYES area -->
+          <rect x="100" y="72" width="100" height="36" rx="12" fill="#050515" stroke="#6ee7f7" stroke-width="1.2"/>
+          <!-- LEFT EYE -->
+          <ellipse cx="122" cy="90" rx="16" ry="14" fill="#0a0a25"/>
+          <ellipse cx="122" cy="90" rx="16" ry="14" fill="none" stroke="#6ee7f7" stroke-width="0.8"/>
+          <g id="robo-leye">
+            <circle cx="122" cy="90" r="9" fill="#1a0040"/>
+            <circle cx="122" cy="90" r="6" fill="#5520a0"/>
+            <circle cx="122" cy="90" r="3.5" fill="#6ee7f7" filter="url(#rGlow)"/>
+            <circle cx="119" cy="87" r="1.8" fill="white" opacity="0.9"/>
+          </g>
+          <!-- RIGHT EYE -->
+          <ellipse cx="178" cy="90" rx="16" ry="14" fill="#0a0a25"/>
+          <ellipse cx="178" cy="90" rx="16" ry="14" fill="none" stroke="#6ee7f7" stroke-width="0.8"/>
+          <g id="robo-reye">
+            <circle cx="178" cy="90" r="9" fill="#1a0040"/>
+            <circle cx="178" cy="90" r="6" fill="#5520a0"/>
+            <circle cx="178" cy="90" r="3.5" fill="#6ee7f7" filter="url(#rGlow)"/>
+            <circle cx="175" cy="87" r="1.8" fill="white" opacity="0.9"/>
+          </g>
+          <!-- Eye scan line animation -->
+          <rect id="scan-line" x="102" y="90" width="98" height="2" rx="1" fill="#6ee7f7" opacity="0.15"/>
+
+          <!-- MOUTH - LED display style -->
+          <rect x="110" y="118" width="80" height="14" rx="5" fill="#050515" stroke="#6ee7f7" stroke-width="0.8"/>
+          <!-- LED dots for mouth expression -->
+          <g id="mouth-happy">
+            <circle cx="118" cy="123" r="2" fill="#34d399" opacity="0.9"/>
+            <circle cx="124" cy="126" r="2" fill="#34d399" opacity="0.9"/>
+            <circle cx="130" cy="127" r="2" fill="#34d399" opacity="0.9"/>
+            <circle cx="136" cy="127" r="2" fill="#34d399" opacity="0.9"/>
+            <circle cx="142" cy="126" r="2" fill="#34d399" opacity="0.9"/>
+            <circle cx="148" cy="125" r="2" fill="#34d399" opacity="0.9"/>
+            <circle cx="154" cy="126" r="2" fill="#34d399" opacity="0.9"/>
+            <circle cx="160" cy="127" r="2" fill="#34d399" opacity="0.9"/>
+            <circle cx="166" cy="127" r="2" fill="#34d399" opacity="0.9"/>
+            <circle cx="172" cy="126" r="2" fill="#34d399" opacity="0.9"/>
+            <circle cx="178" cy="123" r="2" fill="#34d399" opacity="0.9"/>
+          </g>
+          <!-- Head top panel line -->
+          <rect x="118" y="65" width="64" height="2" rx="1" fill="#6ee7f7" opacity="0.3"/>
+        </svg>
+        <div class="robo-glow"></div>
+      </div>
+    </div>
+    <div class="wid-items rev">
+      <div class="wid-item">
+        <div class="wid-corner"></div><div class="wid-corner2"></div>
+        <div class="wid-num">01 —</div>
+        <div class="wid-title">Automation & Controls</div>
+        <p class="wid-desc">Designing and commissioning industrial control systems from concept to production — PLC programming, HMI/SCADA development, servo motion control, and vision system integration.</p>
+        <div class="wid-tags"><span class="wid-tag">PLC</span><span class="wid-tag">HMI/SCADA</span><span class="wid-tag">AutoCAD Electrical</span><span class="wid-tag">Servo Motors</span></div>
+      </div>
+      <div class="wid-item">
+        <div class="wid-corner"></div><div class="wid-corner2"></div>
+        <div class="wid-num">02 —</div>
+        <div class="wid-title">Software & AI Development</div>
+        <p class="wid-desc">Building full-stack applications and AI-powered tools — from React Native mobile apps with OpenAI integration to IoT systems with real-time MQTT pipelines.</p>
+        <div class="wid-tags"><span class="wid-tag">Python</span><span class="wid-tag">Node.js</span><span class="wid-tag">OpenAI API</span><span class="wid-tag">React Native</span></div>
+      </div>
+      <div class="wid-item">
+        <div class="wid-corner"></div><div class="wid-corner2"></div>
+        <div class="wid-num">03 —</div>
+        <div class="wid-title">Hardware Engineering</div>
+        <p class="wid-desc">Designing mechanical and electrical systems from scratch — electrical schematics, 3D cabinet design, hardware assembly, and building custom robots and drones.</p>
+        <div class="wid-tags"><span class="wid-tag">SolidWorks</span><span class="wid-tag">Creo</span><span class="wid-tag">3D Printing</span><span class="wid-tag">Panel Wiring</span></div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- EXPERIENCE -->
-<section class="experience" id="experience">
-  <div class="section-label">// 03. Experience</div>
-  <h2 class="section-title">Where I've Worked</h2>
-
-  <div class="exp-item">
-    <div class="exp-date">Jan 2023 — Aug 2024</div>
-    <div>
-      <div class="exp-company">Tenneco Inc.</div>
-      <div class="exp-role">Engineering Co-op · Burlington, Iowa</div>
-      <p class="exp-desc">
-        Served as primary electrical design engineer in a cross-disciplinary team, building custom automated manufacturing systems from concept through production deployment. Self-taught AutoCAD Electrical and produced the most complex schematics in the plant. Programmed PLC control logic, developed HMI/SCADA systems, integrated Cognex vision systems, and commissioned production equipment including full I/O verification and safety integration.
-      </p>
-      <div class="exp-tags">
-        <span class="exp-tag">AutoCAD Electrical</span>
-        <span class="exp-tag">MotionWorks IEC</span>
-        <span class="exp-tag">Movicon HMI</span>
-        <span class="exp-tag">Cognex Vision</span>
-        <span class="exp-tag">Ethernet/IP</span>
-        <span class="exp-tag">Servo Systems</span>
-        <span class="exp-tag">$1M+ Project</span>
+<section class="surface" id="experience">
+  
+  <h2 class="st">Where I've Worked</h2>
+  <div class="tl">
+    <div class="tli rev">
+      <div class="eh">
+        <div class="ec">Tenneco Inc.</div>
+        <div class="ep">Jan 2023 — Aug 2024 · 2 Years</div>
+      </div>
+      <div class="er">Engineering Co-op · Burlington, Iowa</div>
+      <p class="ed">Served as primary electrical design engineer in a cross-disciplinary team. Self-taught AutoCAD Electrical from zero and produced the most complex schematics in the plant — including a $1M+ global machine modernization program replacing 30 to 40 machines worldwide. Programmed PLC control logic, developed HMI/SCADA systems, integrated Cognex vision inspection, and commissioned production equipment with full I/O verification and safety integration.</p>
+      <div class="echips">
+        <span class="ech">AutoCAD Electrical</span><span class="ech">MotionWorks IEC</span><span class="ech">Movicon HMI</span>
+        <span class="ech">Cognex Vision</span><span class="ech">Ethernet/IP</span><span class="ech">Servo Systems</span><span class="ech">$1M+ Project</span>
       </div>
     </div>
-  </div>
-
-  <div class="exp-item">
-    <div class="exp-date">May 2026 — Aug 2026</div>
-    <div>
-      <div class="exp-company">University of Toledo</div>
-      <div class="exp-role">Summer Camp Instructor Assistant · Toledo, Ohio</div>
-      <p class="exp-desc">
-        Preparing educational materials on cybersecurity, machine learning, and artificial intelligence for high school summer camps. Assisting in delivering technical curriculum and writing instructional reports within the Electrical Engineering and Computer Science department.
-      </p>
-      <div class="exp-tags">
-        <span class="exp-tag">Machine Learning</span>
-        <span class="exp-tag">Cybersecurity</span>
-        <span class="exp-tag">AI Education</span>
-        <span class="exp-tag">Curriculum Design</span>
+    <div class="tli rev">
+      <div class="eh">
+        <div class="ec">University of Toledo</div>
+        <div class="ep">May 2026 — Aug 2026</div>
+      </div>
+      <div class="er">Summer Camp Instructor Assistant · Toledo, Ohio</div>
+      <p class="ed">Preparing educational curriculum on cybersecurity, machine learning, and artificial intelligence for high school students in the Electrical Engineering and Computer Science department.</p>
+      <div class="echips">
+        <span class="ech">Machine Learning</span><span class="ech">Cybersecurity</span><span class="ech">AI Education</span>
       </div>
     </div>
   </div>
 </section>
 
+<!-- PHYSICS SKILLS -->
+<section class="physics-skills" id="skills">
+  
+  <h2 class="st">My Tech Stack</h2>
+  <div class="arena-wrap">
+    <!-- FULL WIDTH CANVAS -->
+    <canvas id="physics-canvas"></canvas>
+    <!-- BRAIN OVERLAY - positioned inside canvas area -->
+    <div class="brain-overlay">
+      <svg id="brain-svg" viewBox="0 0 220 300" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="brainSkin" cx="50%" cy="40%" r="60%">
+            <stop offset="0%" stop-color="#f4a56a"/>
+            <stop offset="100%" stop-color="#c87535"/>
+          </radialGradient>
+          <radialGradient id="brainTop" cx="50%" cy="30%" r="70%">
+            <stop offset="0%" stop-color="#a78bfa"/>
+            <stop offset="50%" stop-color="#6ee7f7"/>
+            <stop offset="100%" stop-color="#34d399"/>
+          </radialGradient>
+          <filter id="bGlow" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="4" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="strongGlow" x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur stdDeviation="8" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <!-- Body -->
+        <rect x="75" y="200" width="70" height="85" rx="18" fill="#2a2a3e"/>
+        <!-- Arms -->
+        <rect x="38" y="208" width="38" height="16" rx="8" fill="#2a2a3e"/>
+        <rect x="144" y="208" width="38" height="16" rx="8" fill="#2a2a3e"/>
+        <!-- Hands -->
+        <ellipse cx="35" cy="216" rx="12" ry="9" fill="url(#brainSkin)"/>
+        <ellipse cx="185" cy="216" rx="12" ry="9" fill="url(#brainSkin)"/>
+        <!-- Legs -->
+        <rect x="82" y="278" width="20" height="22" rx="8" fill="#1a1a30"/>
+        <rect x="118" y="278" width="20" height="22" rx="8" fill="#1a1a30"/>
+        <!-- Neck -->
+        <rect x="94" y="188" width="32" height="18" rx="8" fill="url(#brainSkin)"/>
+        <!-- HEAD - GROWS! -->
+        <ellipse id="bSkull" cx="110" cy="145" rx="60" ry="65" fill="url(#brainSkin)"/>
+        <!-- BRAIN on top - GROWS MORE! -->
+        <ellipse id="bLump" cx="110" cy="88" rx="48" ry="28" fill="url(#brainTop)" opacity="0.95"/>
+        <!-- Brain folds -->
+        <path id="bFold1" d="M72 88 Q91 72 110 82 Q129 72 148 88" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="3" stroke-linecap="round"/>
+        <path id="bFold2" d="M74 100 Q93 84 110 94 Q127 84 146 100" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2" stroke-linecap="round"/>
+        <path id="bFold3" d="M80 110 Q95 96 110 104 Q125 96 140 110" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Cap -->
+        <rect x="58" y="108" width="104" height="26" rx="9" fill="#1a1a2e"/>
+        <ellipse cx="110" cy="108" rx="54" ry="12" fill="#111120"/>
+        <path d="M58 134 Q110 146 162 134" fill="#0d0d14"/>
+        <path d="M54 136 Q110 150 166 136" fill="none" stroke="rgba(110,231,247,0.4)" stroke-width="1.2"/>
+        <!-- Cap logo -->
+        <circle cx="110" cy="119" r="10" fill="#6ee7f7" opacity="0.9" filter="url(#bGlow)"/>
+        <text x="110" y="122.5" text-anchor="middle" font-size="7" fill="#000" font-weight="bold" font-family="monospace">BPP</text>
+        <!-- Ears -->
+        <ellipse cx="50" cy="148" rx="11" ry="13" fill="url(#brainSkin)"/>
+        <ellipse cx="170" cy="148" rx="11" ry="13" fill="url(#brainSkin)"/>
+        <ellipse cx="50" cy="148" rx="7" ry="9" fill="#c87535" opacity="0.4"/>
+        <ellipse cx="170" cy="148" rx="7" ry="9" fill="#c87535" opacity="0.4"/>
+        <!-- Eyebrows - worried/hungry -->
+        <path id="bBrow1" d="M82 128 Q96 122 110 126" stroke="#3d1505" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path id="bBrow2" d="M110 126 Q124 122 138 128" stroke="#3d1505" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <!-- EYES -->
+        <ellipse cx="92" cy="145" rx="15" ry="16" fill="white"/>
+        <ellipse cx="128" cy="145" rx="15" ry="16" fill="white"/>
+        <g id="brain-leye">
+          <circle cx="92" cy="145" r="9" fill="#1a0030"/>
+          <circle cx="92" cy="145" r="6" fill="#5b1fa0"/>
+          <circle cx="92" cy="145" r="3.5" fill="#6ee7f7" filter="url(#bGlow)"/>
+          <circle cx="89" cy="142" r="2" fill="white" opacity="0.95"/>
+        </g>
+        <g id="brain-reye">
+          <circle cx="128" cy="145" r="9" fill="#1a0030"/>
+          <circle cx="128" cy="145" r="6" fill="#5b1fa0"/>
+          <circle cx="128" cy="145" r="3.5" fill="#6ee7f7" filter="url(#bGlow)"/>
+          <circle cx="125" cy="142" r="2" fill="white" opacity="0.95"/>
+        </g>
+        <!-- Eyelid -->
+        <path d="M77 138 Q92 133 107 138" fill="url(#brainSkin)" opacity="0.45"/>
+        <path d="M113 138 Q128 133 143 138" fill="url(#brainSkin)" opacity="0.45"/>
+        <!-- Nose -->
+        <ellipse cx="110" cy="160" rx="6" ry="5" fill="#c87535" opacity="0.5"/>
+        <!-- MOUTH - closed smile -->
+        <path id="mClosed" d="M94 176 Q110 186 126 176" fill="none" stroke="#3d1505" stroke-width="3.5" stroke-linecap="round"/>
+        <!-- MOUTH WIDE OPEN - hungry! -->
+        <g id="mOpen" opacity="0">
+          <!-- Jaw drop -->
+          <path d="M88 174 Q92 210 110 218 Q128 210 132 174" fill="#3d0505"/>
+          <!-- Upper teeth -->
+          <rect x="94" y="174" width="11" height="9" rx="3" fill="white"/>
+          <rect x="107" y="174" width="11" height="9" rx="3" fill="white"/>
+          <rect x="120" y="174" width="9" height="9" rx="3" fill="white"/>
+          <!-- Lower teeth -->
+          <rect x="97" y="206" width="9" height="8" rx="3" fill="white"/>
+          <rect x="110" y="207" width="9" height="8" rx="3" fill="white"/>
+          <!-- Tongue -->
+          <ellipse cx="110" cy="200" rx="16" ry="10" fill="#e05050"/>
+          <path d="M94 200 Q110 210 126 200" fill="#cc3333"/>
+          <!-- Uvula -->
+          <ellipse cx="110" cy="186" rx="5" ry="7" fill="#cc2222"/>
+          <!-- Drool drops -->
+          <ellipse id="drool1" cx="96" cy="218" rx="4" ry="6" fill="#6ee7f7" opacity="0.6"/>
+          <ellipse id="drool2" cx="124" cy="218" rx="3" ry="5" fill="#6ee7f7" opacity="0.5"/>
+        </g>
+        <!-- NOM text -->
+        <text id="nomTxt" x="110" y="55" text-anchor="middle" font-size="26" fill="#fbbf24" font-weight="800" font-family="monospace" opacity="0" filter="url(#strongGlow)">NOM!</text>
+        <!-- Excitement stars -->
+        <g id="eatStars" opacity="0">
+          <text x="25" y="90" font-size="18">⭐</text>
+          <text x="182" y="90" font-size="18">✨</text>
+          <text x="100" y="30" font-size="16">💫</text>
+          <text x="60" y="45" font-size="12">⚡</text>
+          <text x="148" y="45" font-size="12">⚡</text>
+        </g>
+      </svg>
+      <div class="brain-info">
+        <div class="brain-count" id="bCount">🧠 0 skills eaten</div>
+        <div class="brain-msg" id="bMsg">Throw balls at me!</div>
+      </div>
+    </div>
+  </div>
+  <p class="physics-hint">🖱️ Drag &amp; throw balls toward the hungry brain! Watch it grow!</p>
+</section>
+
 <!-- PROJECTS -->
 <section id="projects">
-  <div class="section-label">// 04. Projects</div>
-  <h2 class="section-title">What I've Built</h2>
-  <div class="projects-grid">
-
-    <div class="project-card">
-      <div class="project-header">
-        <div class="project-icon">🔔</div>
-        <div class="project-type">IoT · Hardware</div>
-      </div>
-      <div class="project-body">
-        <div class="project-title">SilentBell</div>
-        <p class="project-desc">
-          End-to-end IoT smart doorbell for hearing-impaired users. Designed electrical schematics in AutoCAD Electrical, completed all wiring and hardware assembly, modeled enclosure in SolidWorks with 3D printed fabrication. Architected real-time MQTT pub/sub system with sub-second latency and &gt;99% reliability.
-        </p>
-        <div class="project-stack">
-          <span class="stack-tag">MQTT</span>
-          <span class="stack-tag">AutoCAD Electrical</span>
-          <span class="stack-tag">SolidWorks</span>
-          <span class="stack-tag">Node.js</span>
-          <span class="stack-tag">React</span>
-          <span class="stack-tag">MongoDB</span>
-          <span class="stack-tag">3D Printing</span>
-        </div>
+  
+  <h2 class="st">What I've Built</h2>
+  <div class="pgrid">
+    <div class="pc rev">
+      <div class="pt"><div class="pem">🔔</div><div class="pbdg">IoT · Hardware</div></div>
+      <div class="pb">
+        <div class="pn">SilentBell</div>
+        <p class="pd">End-to-end IoT smart doorbell for hearing-impaired users. Designed all electrical schematics in AutoCAD Electrical, completed all wiring and hardware assembly, modeled the enclosure in SolidWorks, fabricated via 3D printing. Architected MQTT pub/sub messaging with sub-second latency.</p>
+        <div class="pm"><span class="pmet">99% Reliability</span><span class="pmet">Sub-second Latency</span></div>
+        <div class="pst"><span class="psi">MQTT</span><span class="psi">AutoCAD Electrical</span><span class="psi">SolidWorks</span><span class="psi">Node.js</span><span class="psi">React</span><span class="psi">MongoDB</span><span class="psi">3D Print</span></div>
       </div>
     </div>
-
-    <div class="project-card">
-      <div class="project-header">
-        <div class="project-icon">🤖</div>
-        <div class="project-type">AI · Full-Stack</div>
-      </div>
-      <div class="project-body">
-        <div class="project-title">MoneyMate</div>
-        <p class="project-desc">
-          AI-powered receipt scanning application integrating OpenAI API and OCR to automate data extraction with 95% accuracy, reducing manual entry by 80%. Built complete full-stack pipeline with Node.js, Express, MongoDB backend and React Native mobile frontend.
-        </p>
-        <div class="project-stack">
-          <span class="stack-tag">OpenAI API</span>
-          <span class="stack-tag">OCR</span>
-          <span class="stack-tag">React Native</span>
-          <span class="stack-tag">Node.js</span>
-          <span class="stack-tag">MongoDB</span>
-          <span class="stack-tag">Express</span>
-        </div>
+    <div class="pc rev">
+      <div class="pt"><div class="pem">🤖</div><div class="pbdg">AI · Full-Stack</div></div>
+      <div class="pb">
+        <div class="pn">MoneyMate</div>
+        <p class="pd">AI-powered receipt scanning app integrating OpenAI API and OCR to automate data extraction. Built complete full-stack pipeline with Node.js backend and React Native mobile frontend.</p>
+        <div class="pm"><span class="pmet">95% Accuracy</span><span class="pmet">80% Less Manual Work</span></div>
+        <div class="pst"><span class="psi">OpenAI API</span><span class="psi">OCR</span><span class="psi">React Native</span><span class="psi">Node.js</span><span class="psi">MongoDB</span><span class="psi">Express</span></div>
       </div>
     </div>
+    <div class="pc rev">
+      <div class="pt"><div class="pem">🚁</div><div class="pbdg">Hardware · Robotics</div></div>
+      <div class="pb">
+        <div class="pn">Tricopter Drone</div>
+        <p class="pd">Designed and built a custom tricopter drone with only 3 motors — a unique configuration requiring custom flight controller tuning and mechanical design. A passion project that ignited my hardware engineering journey.</p>
+        <div class="pm"><span class="pmet">3 Motor Design</span><span class="pmet">Custom Build</span></div>
+        <div class="pst"><span class="psi">Hardware Design</span><span class="psi">Flight Controller</span><span class="psi">Electronics</span><span class="psi">Mechanical</span></div>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- ACHIEVEMENTS -->
+<section class="surface" id="achievements">
+  
+  <h2 class="st">Recognition &amp; Awards</h2>
+  <div class="achgrid">
+    <div class="achc rev"><div class="aico">🏆</div><div class="atit">Math Quiz Champion</div><div class="aorg">University of Toledo · Spring 2023</div><p class="adsc">Won the UT math quiz competition. Nobody has ever beaten me for highest score in a math class.</p><span class="abdg gold">1st Place</span></div>
+    <div class="achc rev"><div class="aico">🥇</div><div class="atit">Science Exhibition</div><div class="aorg">St. Joseph's Gorkha High School · Nepal</div><p class="adsc">Secured 1st position at the high school science exhibition — one of my earliest engineering wins.</p><span class="abdg gold">1st Position</span></div>
+    <div class="achc rev"><div class="aico">🎖️</div><div class="atit">Co-op Excellence Medal</div><div class="aorg">University of Toledo · 2024</div><p class="adsc">Awarded the medal for completing a 4-credit engineering co-op during graduation.</p><span class="abdg green">Medal Awarded</span></div>
+    <div class="achc rev"><div class="aico">⭐</div><div class="atit">Magna Cum Laude</div><div class="aorg">University of Toledo · December 2025</div><p class="adsc">Graduated Magna Cum Laude, GPA 3.9. President's List 5 semesters, Dean's List all 9 semesters.</p><span class="abdg blue">GPA 3.9</span></div>
+    <div class="achc rev"><div class="aico">🌟</div><div class="atit">Ebeid STEM Scholar</div><div class="aorg">University of Toledo · 3 Times</div><p class="adsc">Selected as Ebeid Family STEM Scholar three times for outstanding academic excellence in engineering.</p><span class="abdg purple">3× Scholar</span></div>
+    <div class="achc rev"><div class="aico">🔧</div><div class="atit">AutoCAD Excellence</div><div class="aorg">Tenneco Inc. · 2023-2024</div><p class="adsc">Self-taught AutoCAD Electrical from zero and produced the most complex and accurate schematics in the entire plant.</p><span class="abdg green">Plant Best</span></div>
+  </div>
+</section>
+
+<!-- FUN FACTS -->
+<section id="funfacts">
+  
+  <h2 class="st">Fun Facts</h2>
+  <div class="ffgrid">
+    <div class="ffc rev"><span class="ffem">🍳</span><div class="fftx"><strong>Passionate Cook</strong>Family owns a restaurant in Nepal. Grew up cooking with my father — a truly great chef.</div></div>
+    <div class="ffc rev"><span class="ffem">⚽</span><div class="fftx"><strong>Soccer Player</strong>Huge Manchester United supporter and active soccer player. Glory Glory Man United!</div></div>
+    <div class="ffc rev"><span class="ffem">🌍</span><div class="fftx"><strong>World Traveler</strong>Nepal, India, Korea, Qatar, USA. 5 countries and still counting.</div></div>
+    <div class="ffc rev"><span class="ffem">🧮</span><div class="fftx"><strong>Math Obsessed</strong>Nobody has ever beaten me for highest score in a math class. Not once. Ever.</div></div>
+    <div class="ffc rev"><span class="ffem">🚁</span><div class="fftx"><strong>Drone Builder</strong>Built a custom tricopter with only 3 motors. Why use 4 when 3 works better?</div></div>
+    <div class="ffc rev"><span class="ffem">🗣️</span><div class="fftx"><strong>4 Languages</strong>English, Nepali, Newari, Hindi. Engineering is my fifth language.</div></div>
   </div>
 </section>
 
 <!-- CONTACT -->
 <section class="contact" id="contact">
-  <div class="contact-inner">
-    <div class="section-label" style="display:inline-block">// 05. Contact</div>
-    <h2 class="contact-title">Let's <span>Work Together</span></h2>
-    <p class="contact-desc">
-      I am actively seeking full-time engineering opportunities. Whether you need an automation engineer, controls developer, or software engineer — let's talk.
-    </p>
-    <a href="mailto:writetobishnup@gmail.com" class="btn-primary">writetobishnup@gmail.com</a>
-    <div class="contact-links">
-      <a href="tel:5673290596" class="contact-link">📞 (567) 329-0596</a>
-      <a href="https://www.linkedin.com/in/bishnu-prasad-pokharel-2450b9236" target="_blank" class="contact-link">💼 LinkedIn</a>
-    </div>
+  <div class="se" style="display:inline-block">// 07. Contact</div>
+  <h2 class="ctit">Let's Build<br><span>Something Great</span></h2>
+  <p class="csub">Got an idea, a role, or a challenge worth solving? Whether it's automation, software, AI, or something in between — I'm ready to build something extraordinary with you.</p>
+  <a href="mailto:writetobishnup@gmail.com" class="bg" style="display:inline-block">writetobishnup@gmail.com</a>
+  <div class="ccards">
+    <a href="tel:5673290596" class="ccard">📞 (567) 329-0596</a>
+    <a href="https://www.linkedin.com/in/bishnu-prasad-pokharel-2450b9236" target="_blank" class="ccard">💼 LinkedIn</a>
+    <a href="https://github.com/Bishnupokharel64" target="_blank" class="ccard">💻 GitHub</a>
+    <a href="Pokharel_BishnuPrasad_Resume.pdf" download class="ccard">📄 Resume</a>
   </div>
 </section>
 
 <footer>
   <span>© 2026 Bishnu Prasad Pokharel</span>
-  <span>CS & Engineering Graduate · University of Toledo</span>
+  <span>CS &amp; Engineering · University of Toledo · Magna Cum Laude</span>
 </footer>
 
 <script>
-  // Custom cursor
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  let mouseX = 0, mouseY = 0;
-  let ringX = 0, ringY = 0;
+// ===== COMET LOADER =====
+const lc = document.getElementById('lcanvas');
+const ctx = lc.getContext('2d');
+lc.width = window.innerWidth;
+lc.height = window.innerHeight;
 
-  document.addEventListener('mousemove', e => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    cursor.style.left = mouseX - 6 + 'px';
-    cursor.style.top = mouseY - 6 + 'px';
-  });
+const W = lc.width, H = lc.height;
+const particles = [];
+let phase = 'comet'; // comet -> impact -> blast -> reveal
+let cometX = -100, cometY = -100;
+let cometVX = (W * 0.5 + 100) / 60, cometVY = (H * 0.5 + 100) / 60;
+let impactFrame = 0;
+let blastParticles = [];
+let frameCount = 0;
 
-  function animateRing() {
-    ringX += (mouseX - ringX - 20) * 0.12;
-    ringY += (mouseY - ringY - 20) * 0.12;
-    ring.style.left = ringX + 'px';
-    ring.style.top = ringY + 'px';
-    requestAnimationFrame(animateRing);
+// Comet tail
+const tail = [];
+
+function createBlast(x, y) {
+  const colors = ['#6ee7f7','#a78bfa','#34d399','#fbbf24','#f472b6','#fff','#ff6b6b'];
+  for (let i = 0; i < 200; i++) {
+    const angle = Math.random() * Math.PI * 2;
+    const speed = Math.random() * 15 + 3;
+    blastParticles.push({
+      x, y,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed,
+      al: 1,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      r: Math.random() * 4 + 1,
+      decay: Math.random() * 0.015 + 0.008,
+      trail: []
+    });
   }
-  animateRing();
+  // Shockwave rings
+  for (let i = 0; i < 5; i++) {
+    blastParticles.push({
+      x, y, ring: true,
+      radius: 0,
+      maxR: 200 + i * 100,
+      al: 1,
+      color: i % 2 === 0 ? '#6ee7f7' : '#a78bfa',
+      speed: 8 + i * 3
+    });
+  }
+}
 
-  // Hover effect on interactive elements
-  document.querySelectorAll('a, button, .skill-category, .project-card, .stat-card').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursor.style.transform = 'scale(2)';
-      ring.style.transform = 'scale(1.5)';
-      ring.style.borderColor = 'var(--accent)';
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor.style.transform = 'scale(1)';
-      ring.style.transform = 'scale(1)';
-      ring.style.borderColor = 'var(--accent)';
-    });
+function drawComet() {
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#000';
+  ctx.fillRect(0, 0, W, H);
+
+  // Stars background
+  if (frameCount < 5) {
+    lc._stars = lc._stars || Array.from({length: 200}, () => ({
+      x: Math.random() * W, y: Math.random() * H,
+      r: Math.random() * 1.5, al: Math.random()
+    }));
+  }
+  lc._stars.forEach(s => {
+    ctx.save();
+    ctx.globalAlpha = s.al * 0.6;
+    ctx.fillStyle = '#fff';
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
   });
 
-  // Scroll animations
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
+  if (phase === 'comet') {
+    cometX += cometVX;
+    cometY += cometVY;
+    tail.push({x: cometX, y: cometY});
+    if (tail.length > 40) tail.shift();
+
+    // Draw tail
+    tail.forEach((pt, i) => {
+      const al = i / tail.length;
+      const size = al * 8;
+      ctx.save();
+      ctx.globalAlpha = al * 0.8;
+      ctx.shadowBlur = 20;
+      ctx.shadowColor = '#6ee7f7';
+      ctx.fillStyle = `hsl(${180 + i * 2}, 90%, 70%)`;
+      ctx.beginPath();
+      ctx.arc(pt.x, pt.y, size, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    });
+
+    // Comet head
+    ctx.save();
+    ctx.shadowBlur = 40;
+    ctx.shadowColor = '#fff';
+    ctx.fillStyle = '#fff';
+    ctx.beginPath();
+    ctx.arc(cometX, cometY, 12, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // Check if reached center
+    if (cometX >= W * 0.5 - 30 && cometY >= H * 0.5 - 30) {
+      phase = 'impact';
+      createBlast(W / 2, H / 2);
+    }
+  } else if (phase === 'impact') {
+    // Screen flash
+    ctx.fillStyle = `rgba(255,255,255,${Math.max(0, 0.9 - impactFrame * 0.05)})`;
+    ctx.fillRect(0, 0, W, H);
+    impactFrame++;
+    if (impactFrame > 15) phase = 'blast';
+  } else if (phase === 'blast') {
+    let alive = false;
+    blastParticles.forEach(p => {
+      if (p.ring) {
+        p.radius += p.speed;
+        p.al = Math.max(0, 1 - p.radius / p.maxR);
+        if (p.al > 0) {
+          alive = true;
+          ctx.save();
+          ctx.globalAlpha = p.al;
+          ctx.strokeStyle = p.color;
+          ctx.lineWidth = 2;
+          ctx.shadowBlur = 15;
+          ctx.shadowColor = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.restore();
+        }
+      } else {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.15;
+        p.al -= p.decay;
+        if (p.al > 0) {
+          alive = true;
+          ctx.save();
+          ctx.globalAlpha = Math.max(0, p.al);
+          ctx.fillStyle = p.color;
+          ctx.shadowBlur = 10;
+          ctx.shadowColor = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        }
       }
     });
-  }, { threshold: 0.1 });
 
-  document.querySelectorAll('.skill-category, .project-card, .exp-item, .stat-card').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(el);
+    // Show name during blast
+    if (impactFrame > 30) {
+      document.getElementById('ltext').style.opacity = '1';
+    }
+
+    if (!alive || impactFrame > 120) {
+      phase = 'done';
+    }
+    impactFrame++;
+  }
+
+  frameCount++;
+  if (phase !== 'done') {
+    requestAnimationFrame(drawComet);
+  } else {
+    // Fade out loader
+    setTimeout(() => {
+      const l = document.getElementById('loader');
+      l.style.transition = 'opacity 1s ease';
+      l.style.opacity = '0';
+      setTimeout(() => l.style.display = 'none', 1000);
+    }, 600);
+  }
+}
+
+drawComet();
+
+// ===== CURSOR =====
+const cur = document.getElementById('cur'), cur2 = document.getElementById('cur2');
+let mx = 0, my = 0, tx = 0, ty = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cur.style.left = mx + 'px'; cur.style.top = my + 'px';
+});
+(function anim() {
+  tx += (mx - tx) * 0.12; ty += (my - ty) * 0.12;
+  cur2.style.left = tx + 'px'; cur2.style.top = ty + 'px';
+  requestAnimationFrame(anim);
+})();
+document.querySelectorAll('a,button,.skcard,.pc,.achc,.ffc').forEach(el => {
+  el.addEventListener('mouseenter', () => { cur.style.transform = 'translate(-50%,-50%) scale(3)'; cur2.style.transform = 'translate(-50%,-50%) scale(1.5)'; });
+  el.addEventListener('mouseleave', () => { cur.style.transform = 'translate(-50%,-50%) scale(1)'; cur2.style.transform = 'translate(-50%,-50%) scale(1)'; });
+});
+
+// ===== SCROLL REVEAL =====
+const obs = new IntersectionObserver(es => {
+  es.forEach((e, i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('vis'), i * 80); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.rev').forEach(el => obs.observe(el));
+
+// ===== EYE TRACKING =====
+const leftEye = document.getElementById('left-eye');
+const rightEye = document.getElementById('right-eye');
+const charSvg = document.getElementById('char-svg');
+
+document.addEventListener('mousemove', function(e) {
+  if (!charSvg || !leftEye || !rightEye) return;
+  const svgRect = charSvg.getBoundingClientRect();
+  const scaleX = svgRect.width / 200;
+  const scaleY = svgRect.height / 260;
+  const maxMove = 4;
+
+  // Left eye center in screen coords
+  const lEyeX = svgRect.left + 86 * scaleX;
+  const lEyeY = svgRect.top + 90 * scaleY;
+  const lAngle = Math.atan2(e.clientY - lEyeY, e.clientX - lEyeX);
+  const lDist = Math.min(maxMove, Math.hypot(e.clientX - lEyeX, e.clientY - lEyeY) / 25);
+  leftEye.setAttribute('transform', 'translate(' + (Math.cos(lAngle)*lDist).toFixed(2) + ',' + (Math.sin(lAngle)*lDist).toFixed(2) + ')');
+
+  // Right eye center in screen coords
+  const rEyeX = svgRect.left + 114 * scaleX;
+  const rEyeY = svgRect.top + 90 * scaleY;
+  const rAngle = Math.atan2(e.clientY - rEyeY, e.clientX - rEyeX);
+  const rDist = Math.min(maxMove, Math.hypot(e.clientX - rEyeX, e.clientY - rEyeY) / 25);
+  rightEye.setAttribute('transform', 'translate(' + (Math.cos(rAngle)*rDist).toFixed(2) + ',' + (Math.sin(rAngle)*rDist).toFixed(2) + ')');
+});
+
+
+// Monitor screen alternating color animation via JS for more control
+const screenA = document.getElementById('screen-a');
+const screenB = document.getElementById('screen-b');
+const cursorEl = document.getElementById('cursor-blink');
+
+// Cursor tracking for desk character
+const le3 = document.getElementById('left-eye3');
+const re3 = document.getElementById('right-eye3');
+const cs3 = document.getElementById('char-desk');
+document.addEventListener('mousemove', function(e) {
+  if (!cs3 || !le3 || !re3) return;
+  const r3 = cs3.getBoundingClientRect();
+  const sx = r3.width / 300, sy = r3.height / 400;
+  const max = 3.5;
+  const lx = r3.left + 116*sx, ly = r3.top + 166*sy;
+  const la = Math.atan2(e.clientY-ly, e.clientX-lx);
+  const ld = Math.min(max, Math.hypot(e.clientX-lx, e.clientY-ly)/30);
+  le3.setAttribute('transform','translate('+(Math.cos(la)*ld).toFixed(2)+','+(Math.sin(la)*ld).toFixed(2)+')');
+  const rx3 = r3.left + 144*sx, ry3 = r3.top + 166*sy;
+  const ra = Math.atan2(e.clientY-ry3, e.clientX-rx3);
+  const rd = Math.min(max, Math.hypot(e.clientX-rx3, e.clientY-ry3)/30);
+  re3.setAttribute('transform','translate('+(Math.cos(ra)*rd).toFixed(2)+','+(Math.sin(ra)*rd).toFixed(2)+')');
+});
+
+// ===== WATER RIPPLE =====
+document.querySelectorAll('.skcard,.pc,.achc').forEach(c => {
+  c.addEventListener('mousemove', e => {
+    const r = c.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width * 100).toFixed(1);
+    const y = ((e.clientY - r.top) / r.height * 100).toFixed(1);
+    c.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(110,231,247,0.07) 0%, var(--s1) 65%)`;
   });
+  c.addEventListener('mouseleave', () => c.style.background = '');
+});
+
+
+
+// Astronaut eye tracking
+const astroL = document.getElementById('astro-leye');
+const astroR = document.getElementById('astro-reye');
+const astroSvg = document.getElementById('astro-svg');
+document.addEventListener('mousemove', function(e) {
+  if (!astroSvg||!astroL||!astroR) return;
+  const ar = astroSvg.getBoundingClientRect();
+  const sx=ar.width/260, sy=ar.height/340;
+  const lx=ar.left+118*sx, ly=ar.top+122*sy;
+  const la=Math.atan2(e.clientY-ly,e.clientX-lx);
+  const ld=Math.min(3,Math.hypot(e.clientX-lx,e.clientY-ly)/35);
+  astroL.setAttribute('transform','translate('+(Math.cos(la)*ld).toFixed(2)+','+(Math.sin(la)*ld).toFixed(2)+')');
+  const rx2=ar.left+142*sx, ry2=ar.top+122*sy;
+  const ra=Math.atan2(e.clientY-ry2,e.clientX-rx2);
+  const rd=Math.min(3,Math.hypot(e.clientX-rx2,e.clientY-ry2)/35);
+  astroR.setAttribute('transform','translate('+(Math.cos(ra)*rd).toFixed(2)+','+(Math.sin(ra)*rd).toFixed(2)+')');
+});
+
+// ===== ROBOT EYE TRACKING (What I Do section) =====
+const roboL = document.getElementById('robo-leye');
+const roboR = document.getElementById('robo-reye');
+const roboSvg = document.getElementById('robo-svg');
+document.addEventListener('mousemove', function(e) {
+  if (!roboSvg || !roboL || !roboR) return;
+  const rr = roboSvg.getBoundingClientRect();
+  const sx = rr.width/300, sy = rr.height/380;
+  const max = 4;
+  const lx = rr.left+122*sx, ly = rr.top+90*sy;
+  const la = Math.atan2(e.clientY-ly,e.clientX-lx);
+  const ld = Math.min(max,Math.hypot(e.clientX-lx,e.clientY-ly)/30);
+  roboL.setAttribute('transform','translate('+(Math.cos(la)*ld).toFixed(2)+','+(Math.sin(la)*ld).toFixed(2)+')');
+  const rx2=rr.left+178*sx, ry2=rr.top+90*sy;
+  const ra=Math.atan2(e.clientY-ry2,e.clientX-rx2);
+  const rd=Math.min(max,Math.hypot(e.clientX-rx2,e.clientY-ry2)/30);
+  roboR.setAttribute('transform','translate('+(Math.cos(ra)*rd).toFixed(2)+','+(Math.sin(ra)*rd).toFixed(2)+')');
+});
+
+// ===== BRAIN MONSTER =====
+const bSkull = document.getElementById('bSkull');
+const bLump = document.getElementById('bLump');
+const bFold1 = document.getElementById('bFold1');
+const bFold2 = document.getElementById('bFold2');
+const bFold3 = document.getElementById('bFold3');
+const mClosed = document.getElementById('mClosed');
+const mOpen = document.getElementById('mOpen');
+const nomTxt = document.getElementById('nomTxt');
+const eatStars = document.getElementById('eatStars');
+const brainSvgEl = document.getElementById('brain-svg');
+const brainLeye = document.getElementById('brain-leye');
+const brainReye = document.getElementById('brain-reye');
+const bBrow1 = document.getElementById('bBrow1');
+const bBrow2 = document.getElementById('bBrow2');
+const bCountEl = document.getElementById('bCount');
+const bMsgEl = document.getElementById('bMsg');
+let eaten = 0;
+let isHungry = false;
+
+// Brain eye tracking
+document.addEventListener('mousemove', function(e) {
+  if (!brainSvgEl||!brainLeye||!brainReye) return;
+  const br = brainSvgEl.getBoundingClientRect();
+  const sx=br.width/220, sy=br.height/300;
+  const lx=br.left+92*sx, ly=br.top+145*sy;
+  const la=Math.atan2(e.clientY-ly,e.clientX-lx);
+  const ld=Math.min(4,Math.hypot(e.clientX-lx,e.clientY-ly)/25);
+  brainLeye.setAttribute('transform','translate('+(Math.cos(la)*ld).toFixed(2)+','+(Math.sin(la)*ld).toFixed(2)+')');
+  const rx2=br.left+128*sx, ry2=br.top+145*sy;
+  const ra=Math.atan2(e.clientY-ry2,e.clientX-rx2);
+  const rd=Math.min(4,Math.hypot(e.clientX-rx2,e.clientY-ry2)/25);
+  brainReye.setAttribute('transform','translate('+(Math.cos(ra)*rd).toFixed(2)+','+(Math.sin(ra)*rd).toFixed(2)+')');
+});
+
+function showHungry(hungry) {
+  if (!brainSvgEl) return;
+  isHungry = hungry;
+  if (hungry) {
+    brainSvgEl.classList.add('hungry');
+    if(mClosed) mClosed.style.opacity='0';
+    if(mOpen) mOpen.style.opacity='1';
+    // Worried eyebrows
+    if(bBrow1) bBrow1.setAttribute('d','M82 120 Q96 128 110 124');
+    if(bBrow2) bBrow2.setAttribute('d','M110 124 Q124 128 138 120');
+  } else {
+    brainSvgEl.classList.remove('hungry');
+    if(mClosed) mClosed.style.opacity='1';
+    if(mOpen) mOpen.style.opacity='0';
+    // Normal eyebrows
+    if(bBrow1) bBrow1.setAttribute('d','M82 128 Q96 122 110 126');
+    if(bBrow2) bBrow2.setAttribute('d','M110 126 Q124 122 138 128');
+  }
+}
+
+function eatBall() {
+  eaten++;
+  showHungry(false);
+  if(nomTxt) { nomTxt.style.opacity='1'; nomTxt.style.transition='opacity 0.1s'; }
+  if(eatStars) { eatStars.style.opacity='1'; }
+  // Grow skull
+  const newRx = Math.min(60+eaten*3.5, 110);
+  const newRy = Math.min(65+eaten*3.5, 115);
+  if(bSkull) { bSkull.setAttribute('rx',newRx.toFixed(0)); bSkull.setAttribute('ry',newRy.toFixed(0)); }
+  // Grow brain lump more dramatically
+  if(bLump) {
+    bLump.setAttribute('rx', Math.min(48+eaten*4.5, 100).toFixed(0));
+    bLump.setAttribute('ry', Math.min(28+eaten*3.5, 70).toFixed(0));
+    bLump.setAttribute('cy', Math.max(88-eaten*2, 30).toFixed(0));
+  }
+  if(bCountEl) bCountEl.textContent = '🧠 '+eaten+' skill'+(eaten===1?'':'s')+' eaten';
+  const msgs = ['Throw more!','MORE SKILLS!','Getting smarter!','HUGE BRAIN!','UNSTOPPABLE!!','GENIUS MODE!!','GALAXY BRAIN!!!'];
+  if(bMsgEl) bMsgEl.textContent = msgs[Math.min(eaten-1, msgs.length-1)];
+  setTimeout(()=>{ if(nomTxt) nomTxt.style.opacity='0'; if(eatStars) eatStars.style.opacity='0'; }, 800);
+}
+
+// ===== PHYSICS ENGINE =====
+const pCanvas = document.getElementById('physics-canvas');
+const pCtx = pCanvas.getContext('2d');
+
+function resizeCanvas() {
+  pCanvas.width = pCanvas.offsetWidth;
+  pCanvas.height = parseInt(getComputedStyle(pCanvas).height) || 520;
+}
+resizeCanvas();
+window.addEventListener('resize', ()=>{ resizeCanvas(); initBalls(); });
+setTimeout(()=>{ resizeCanvas(); initBalls(); }, 400);
+
+const skills = [
+  {n:'PLC',c:'#6ee7f7'},{n:'AutoCAD',c:'#a78bfa'},{n:'Python',c:'#34d399'},
+  {n:'Node.js',c:'#fbbf24'},{n:'SolidWorks',c:'#f472b6'},{n:'Movicon',c:'#6ee7f7'},
+  {n:'Cognex',c:'#a78bfa'},{n:'OpenAI',c:'#34d399'},{n:'React Native',c:'#fbbf24'},
+  {n:'Ethernet/IP',c:'#f472b6'},{n:'MQTT',c:'#6ee7f7'},{n:'MongoDB',c:'#a78bfa'},
+  {n:'Java',c:'#34d399'},{n:'C/C++',c:'#fbbf24'},{n:'MATLAB',c:'#f472b6'},
+  {n:'SQL',c:'#6ee7f7'},{n:'Git',c:'#a78bfa'},{n:'Linux',c:'#34d399'},
+  {n:'Servo',c:'#fbbf24'},{n:'HMI/SCADA',c:'#f472b6'},{n:'Creo',c:'#6ee7f7'},
+  {n:'Power BI',c:'#a78bfa'},{n:'Minitab',c:'#34d399'},{n:'FMEA',c:'#fbbf24'},
+];
+
+let balls = [];
+const GRAVITY = 0.25, FRICTION = 0.985, BOUNCE = 0.72;
+// Brain zone = left 220px of canvas
+const BRAIN_ZONE_W = 220;
+
+function initBalls() {
+  const W = pCanvas.width, H = pCanvas.height;
+  balls = skills.map(s => {
+    const r = Math.max(34, s.n.length * 5.8);
+    return {
+      x: BRAIN_ZONE_W + r + Math.random()*(W-BRAIN_ZONE_W-r*2),
+      y: r + Math.random()*(H*0.7),
+      vx: (Math.random()-0.5)*5,
+      vy: (Math.random()-0.5)*4,
+      r, name:s.n, color:s.c,
+      mass: r*0.05, eaten:false
+    };
+  });
+}
+initBalls();
+
+let mouse = {x:0,y:0,down:false,drag:null,px:0,py:0};
+
+function getPos(e) {
+  const rect = pCanvas.getBoundingClientRect();
+  const cx = (e.touches?e.touches[0].clientX:e.clientX)-rect.left;
+  const cy = (e.touches?e.touches[0].clientY:e.clientY)-rect.top;
+  return {x:cx*(pCanvas.width/rect.width), y:cy*(pCanvas.height/rect.height)};
+}
+
+pCanvas.addEventListener('mousedown',e=>{
+  const p=getPos(e); mouse.down=true; mouse.px=p.x; mouse.py=p.y;
+  balls.forEach(b=>{ if(!b.eaten&&Math.hypot(p.x-b.x,p.y-b.y)<b.r){mouse.drag=b;b.vx=0;b.vy=0;} });
+});
+pCanvas.addEventListener('mousemove',e=>{
+  const p=getPos(e);
+  if(mouse.drag){
+    mouse.drag.vx=p.x-mouse.drag.x; mouse.drag.vy=p.y-mouse.drag.y;
+    mouse.drag.x=p.x; mouse.drag.y=p.y;
+    // Show hungry if ball near brain zone
+    if(p.x < BRAIN_ZONE_W+100) showHungry(true);
+    else showHungry(false);
+  }
+  mouse.x=p.x; mouse.y=p.y;
+});
+pCanvas.addEventListener('mouseup',()=>{ mouse.down=false; mouse.drag=null; showHungry(false); });
+pCanvas.addEventListener('mouseleave',()=>{ mouse.down=false; mouse.drag=null; showHungry(false); });
+pCanvas.addEventListener('touchstart',e=>{e.preventDefault();const p=getPos(e);mouse.down=true;balls.forEach(b=>{if(!b.eaten&&Math.hypot(p.x-b.x,p.y-b.y)<b.r){mouse.drag=b;b.vx=0;b.vy=0;}});},{passive:false});
+pCanvas.addEventListener('touchmove',e=>{e.preventDefault();const p=getPos(e);if(mouse.drag){mouse.drag.vx=p.x-mouse.drag.x;mouse.drag.vy=p.y-mouse.drag.y;mouse.drag.x=p.x;mouse.drag.y=p.y;if(p.x<BRAIN_ZONE_W+100)showHungry(true);else showHungry(false);}},{passive:false});
+pCanvas.addEventListener('touchend',()=>{mouse.down=false;mouse.drag=null;showHungry(false);});
+
+function resolveCollision(a,b){
+  const dx=b.x-a.x,dy=b.y-a.y,dist=Math.sqrt(dx*dx+dy*dy),min=a.r+b.r;
+  if(dist<min&&dist>0){
+    const nx=dx/dist,ny=dy/dist,ov=min-dist;
+    a.x-=nx*ov*0.5;a.y-=ny*ov*0.5;b.x+=nx*ov*0.5;b.y+=ny*ov*0.5;
+    const dvx=a.vx-b.vx,dvy=a.vy-b.vy,dot=dvx*nx+dvy*ny;
+    if(dot>0){const im=(2*dot)/(a.mass+b.mass);a.vx-=im*b.mass*nx*BOUNCE;a.vy-=im*b.mass*ny*BOUNCE;b.vx+=im*a.mass*nx*BOUNCE;b.vy+=im*a.mass*ny*BOUNCE;}
+  }
+}
+
+function drawDumpling(b){
+  pCtx.save();
+  const x=b.x, y=b.y+b.r*0.06, r=b.r;
+  pCtx.shadowBlur=16; pCtx.shadowColor=b.color+'88';
+
+  // MAIN BODY - round bao bun shape, wider than tall
+  const bodyG=pCtx.createRadialGradient(x-r*0.2,y-r*0.15,r*0.05,x+r*0.05,y+r*0.1,r*1.05);
+  bodyG.addColorStop(0,'#fff8ee');
+  bodyG.addColorStop(0.45,'#fdedc8');
+  bodyG.addColorStop(0.8,'#f5d898');
+  bodyG.addColorStop(1,'#e8c070');
+  pCtx.beginPath();
+  pCtx.ellipse(x,y+r*0.06,r*0.92,r*0.78,0,0,Math.PI*2);
+  pCtx.fillStyle=bodyG; pCtx.fill();
+
+  // Color tint from skill color
+  pCtx.globalAlpha=0.18;
+  pCtx.beginPath();
+  pCtx.ellipse(x,y+r*0.06,r*0.92,r*0.78,0,0,Math.PI*2);
+  pCtx.fillStyle=b.color; pCtx.fill();
+  pCtx.globalAlpha=1;
+
+  // Subtle border
+  pCtx.strokeStyle='#d4a840'; pCtx.lineWidth=1.2; pCtx.globalAlpha=0.5;
+  pCtx.beginPath();
+  pCtx.ellipse(x,y+r*0.06,r*0.92,r*0.78,0,0,Math.PI*2);
+  pCtx.stroke(); pCtx.globalAlpha=1; pCtx.shadowBlur=0;
+
+  // TWISTED TOP KNOT - like the cute bao image
+  const knotX=x, knotBaseY=y-r*0.68;
+  // Base of knot - small oval
+  pCtx.fillStyle='#e8c070';
+  pCtx.beginPath();
+  pCtx.ellipse(knotX,knotBaseY+r*0.08,r*0.22,r*0.14,0,0,Math.PI*2);
+  pCtx.fill();
+  // Knot twists - 5 little petal shapes
+  const petalCount=5, petalR=r*0.095, petalDist=r*0.13;
+  for(let i=0;i<petalCount;i++){
+    const angle=(i/petalCount)*Math.PI*2 - Math.PI/2;
+    const px=knotX+Math.cos(angle)*petalDist;
+    const py=knotBaseY+Math.sin(angle)*petalDist*0.6;
+    const pg=pCtx.createRadialGradient(px,py,0,px,py,petalR);
+    pg.addColorStop(0,'#fff0cc');pg.addColorStop(1,'#d4a840');
+    pCtx.beginPath();
+    pCtx.ellipse(px,py,petalR,petalR*0.7,angle,0,Math.PI*2);
+    pCtx.fillStyle=pg; pCtx.fill();
+    pCtx.strokeStyle='#c49030'; pCtx.lineWidth=0.7; pCtx.globalAlpha=0.6;
+    pCtx.stroke(); pCtx.globalAlpha=1;
+  }
+  // Center dot of knot
+  pCtx.fillStyle='#c49030';
+  pCtx.beginPath();
+  pCtx.arc(knotX,knotBaseY,r*0.055,0,Math.PI*2);
+  pCtx.fill();
+
+  // BIG SHINE highlight (like the image)
+  const shine=pCtx.createRadialGradient(x-r*0.38,y-r*0.28,0,x-r*0.22,y-r*0.12,r*0.42);
+  shine.addColorStop(0,'rgba(255,255,255,0.72)');shine.addColorStop(1,'rgba(255,255,255,0)');
+  pCtx.beginPath();
+  pCtx.ellipse(x,y+r*0.06,r*0.92,r*0.78,0,0,Math.PI*2);
+  pCtx.fillStyle=shine; pCtx.fill();
+
+  // CUTE FACE - only on bigger dumplings
+  if(r>30){
+    const faceY=y+r*0.12;
+    // Rosy cheeks
+    pCtx.globalAlpha=0.45;
+    pCtx.fillStyle='#e8708a';
+    pCtx.beginPath(); pCtx.ellipse(x-r*0.35,faceY+r*0.08,r*0.14,r*0.09,0,0,Math.PI*2); pCtx.fill();
+    pCtx.beginPath(); pCtx.ellipse(x+r*0.35,faceY+r*0.08,r*0.14,r*0.09,0,0,Math.PI*2); pCtx.fill();
+    pCtx.globalAlpha=1;
+    // Eyes
+    pCtx.fillStyle='#2a1a0a';
+    pCtx.beginPath(); pCtx.ellipse(x-r*0.2,faceY-r*0.06,r*0.09,r*0.11,0,0,Math.PI*2); pCtx.fill();
+    pCtx.beginPath(); pCtx.ellipse(x+r*0.2,faceY-r*0.06,r*0.09,r*0.11,0,0,Math.PI*2); pCtx.fill();
+    // Eye shine
+    pCtx.fillStyle='white';
+    pCtx.beginPath(); pCtx.arc(x-r*0.23,faceY-r*0.1,r*0.04,0,Math.PI*2); pCtx.fill();
+    pCtx.beginPath(); pCtx.arc(x+r*0.17,faceY-r*0.1,r*0.04,0,Math.PI*2); pCtx.fill();
+    // Smile
+    pCtx.strokeStyle='#2a1a0a'; pCtx.lineWidth=r*0.06; pCtx.lineCap='round';
+    pCtx.beginPath();
+    pCtx.arc(x,faceY+r*0.04,r*0.16,0.2,Math.PI-0.2);
+    pCtx.stroke();
+    // Tiny tongue
+    pCtx.fillStyle='#e05060';
+    pCtx.beginPath(); pCtx.ellipse(x,faceY+r*0.18,r*0.07,r*0.05,0,0,Math.PI*2); pCtx.fill();
+  }
+
+  // SKILL TEXT below face
+  const fontSize=Math.max(8,r*0.26);
+  pCtx.font='bold '+fontSize+'px Space Mono,monospace';
+  pCtx.textAlign='center'; pCtx.textBaseline='middle';
+  pCtx.fillStyle='#3a2200';
+  pCtx.shadowColor='rgba(255,240,180,0.8)'; pCtx.shadowBlur=3;
+  // For big balls put text below face, for small just center
+  const textY = r>30 ? y+r*0.52 : y+r*0.1;
+  pCtx.fillText(b.name,x,textY);
+  pCtx.restore();
+}
+
+function loop(){
+  const W=pCanvas.width,H=pCanvas.height;
+  pCtx.clearRect(0,0,W,H);
+  pCtx.fillStyle='rgba(10,10,20,0.25)';pCtx.fillRect(0,0,W,H);
+  // Brain zone separator glow
+  pCtx.save();
+  const sepG=pCtx.createLinearGradient(BRAIN_ZONE_W-2,0,BRAIN_ZONE_W+2,0);
+  sepG.addColorStop(0,'rgba(110,231,247,0)');sepG.addColorStop(0.5,'rgba(110,231,247,0.4)');sepG.addColorStop(1,'rgba(110,231,247,0)');
+  pCtx.fillStyle=sepG;pCtx.fillRect(BRAIN_ZONE_W-1,0,3,H);pCtx.restore();
+
+  balls.forEach(b=>{
+    if(b===mouse.drag||b.eaten) return;
+    b.vy+=GRAVITY; b.vx*=FRICTION; b.vy*=FRICTION;
+    b.x+=b.vx; b.y+=b.vy;
+    // Walls - right and top/bottom only
+    if(b.x+b.r>W){b.x=W-b.r;b.vx=-Math.abs(b.vx)*BOUNCE;}
+    if(b.y-b.r<0){b.y=b.r;b.vy=Math.abs(b.vy)*BOUNCE;}
+    if(b.y+b.r>H){b.y=H-b.r;b.vy=-Math.abs(b.vy)*BOUNCE;}
+    // Left wall = brain zone - EAT IT!
+    if(b.x-b.r<BRAIN_ZONE_W && !b.justEaten){
+      b.justEaten=true;
+      eatBall();
+      // Respawn from right
+      b.x=W-b.r-20;
+      b.y=b.r+Math.random()*(H-b.r*2);
+      b.vx=-(Math.random()*6+3);
+      b.vy=(Math.random()-0.5)*5;
+      setTimeout(()=>{b.justEaten=false;},500);
+    }
+  });
+
+  for(let i=0;i<balls.length;i++)
+    for(let j=i+1;j<balls.length;j++)
+      if(!balls[i].eaten&&!balls[j].eaten)
+        resolveCollision(balls[i],balls[j]);
+
+  balls.forEach(b=>{ if(!b.eaten) drawDumpling(b); });
+  requestAnimationFrame(loop);
+}
+loop();
 </script>
 </body>
 </html>
